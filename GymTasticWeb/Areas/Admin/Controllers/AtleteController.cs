@@ -8,16 +8,16 @@ namespace GymTasticWeb.Areas.Admin.Controllers
 {
     public class AtleteController : Controller
     {
-        private readonly IUnityOfWork _unityOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AtleteController(IUnityOfWork unityOfWork)
+        public AtleteController(IUnitOfWork unitOfWork)
         {
-            _unityOfWork = unityOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            var atletesList = _unityOfWork.Atlete.GetAll(includeProperties: "Gender").ToList();
+            var atletesList = _unitOfWork.Atlete.GetAll(includeProperties: "Gender").ToList();
             return View(atletesList);
         }
 
@@ -25,7 +25,7 @@ namespace GymTasticWeb.Areas.Admin.Controllers
         {
             AtleteViewModel atleteViewModel = new AtleteViewModel();
             atleteViewModel.Atlete = new Atlete();
-            atleteViewModel.GenderList = _unityOfWork.Gender.GetAll().Select(u => new SelectListItem
+            atleteViewModel.GenderList = _unitOfWork.Gender.GetAll().Select(u => new SelectListItem
             {
                 Text = u.GenderDescription,
                 Value = u.Id.ToString()
@@ -39,8 +39,8 @@ namespace GymTasticWeb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unityOfWork.Atlete.Add(atleteViewModel.Atlete);
-                _unityOfWork.Save();
+                _unitOfWork.Atlete.Add(atleteViewModel.Atlete);
+                _unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
             }
             return View(atleteViewModel);
@@ -51,7 +51,7 @@ namespace GymTasticWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var atletesList = _unityOfWork.Atlete.GetAll(includeProperties: "Gender")
+            var atletesList = _unitOfWork.Atlete.GetAll(includeProperties: "Gender")
                                                  .Select(u => new
                                                  {
                                                      id = u.Id,
@@ -68,7 +68,7 @@ namespace GymTasticWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Get(int? id)
         {
-            var atlete = _unityOfWork.Atlete.Get(u => u.Id == id, includeProperties: "Gender");
+            var atlete = _unitOfWork.Atlete.Get(u => u.Id == id, includeProperties: "Gender");
 
             return View(atlete);
         }

@@ -25,5 +25,12 @@ namespace GymTastic.DataAccess.Data
         public DbSet<Gender> Genders { get; set; }
         public DbSet<PersonalizedTraining> PersonalizedTraining { get; set; }
         public DbSet<Trainer> Trainers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+
+        }
     }
 }

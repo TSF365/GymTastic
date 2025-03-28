@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymTastic.DataAccess.Repository.IRepository
 {
-    public interface IUnityOfWork
+    public interface IUnitOfWork
     {
         IAtleteRepository Atlete { get; }
         IClassesRepository Classes { get; }

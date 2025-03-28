@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GymTastic.DataAccess.Repository
 {
-    public class UnityOfWork : IUnityOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _db;
         public IAtleteRepository Atlete { get; private set; }
@@ -22,7 +22,7 @@ namespace GymTastic.DataAccess.Repository
         
         public IFileClassificationTypeRepository FileClassificationType { get; private set; }
 
-        public UnityOfWork(ApplicationDbContext db)
+        public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Atlete = new AtleteRepository(_db);
