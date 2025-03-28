@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GymTastic.DataAccess.Repository.IRepository
+{
+    public interface IUnityOfWork
+    {
+        IAtleteRepository Atlete { get; }
+        IClassesRepository Classes { get; }
+        IClassFeedbackRepository ClassFeedback { get; }
+        IAttachmentRepository Attachment { get; }
+        IGenderRepository Gender { get; }
+        IFileClassificationTypeRepository FileClassificationType { get; }
+        IPersonalizedTrainingRepository PersonalizedTraining { get; }
+        ITrainerRepository Trainer { get; }
+
+        void Save();
+    }
+}
