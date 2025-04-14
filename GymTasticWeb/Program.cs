@@ -5,9 +5,12 @@ using GymTastic.DataAccess.Repository.IRepository;
 using GymTastic.DataAccess.Repository;
 using GymTastic.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using GymTasticWeb.Services;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllersWithViews();
 
 var connectionInUse = builder.Configuration.GetSection("ConnectionStringSettings").GetValue<string>("DefaultConnection");
 
@@ -29,6 +32,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -40,11 +45,20 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    //FileProvider = new PhysicalFileProvider(@"C:\temp\Files"),
+    FileProvider = new PhysicalFileProvider(builder.Configuration.GetSection("Settings").GetValue<string>("DefaultWebRootFolder")),
+    RequestPath = "/Files"
+
+});
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

@@ -1,0 +1,291 @@
+﻿@model AtleteViewModel
+
+<div class="container">
+
+    @* Dummy *@
+    @* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+        Registos Médicos
+    </button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+        Registos Desportivos
+    </button> *@
+    <button type="button" class="btn btn-primary">
+        <a asp-controller="File" asp-action="Create" asp-route-id="@Model.Atlete.Id" class="btn btn-primary">
+            <i class="bi bi-paperclip"></i> Adicionar Anexo
+        </a>
+    </button>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @* END Dummy*@
+
+    <form method="post" class="row" enctype="multipart/form-data">
+        <input asp-for="Atlete.Id" hidden />
+        <input asp-for="Atlete.PhotoUrl" hidden />
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        @* ------ Main Registo do Atleta ------ *@
+
+        <div class="border p-3 mt-4">
+
+            @* ------ HEADER ------ *@
+
+            <div class="row pb-2">
+                <h2 class="text-primary">Atualizar Atleta</h2>
+                <hr />
+            </div>
+
+            @* ------ Nome Apelido e Foto ------ *@
+            <div class="row">
+                <div class="col-10">
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.FirstName" class="p-0"></label>
+                        <input asp-for="Atlete.FirstName" class="form-control" size="32" />
+                        <span asp-validation-for="Atlete.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.LastName" class="p-0"></label>
+                        <input asp-for="Atlete.LastName" class="form-control" />
+                        <span asp-validation-for="Atlete.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-2 border-1 mt-4 text-end">
+                    <img @* src="https://caco.osaekomi.pt/atletes/@Model.Atlete.PhotoUrl" *@ width="75%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                </div>
+            </div>
+
+            <div class="mb-3 row p-1">
+                <label asp-for="Atlete.PhotoUrl" class="p-0"></label>
+                <input asp-for="Atlete.PhotoUrl" type="file" name="file" class="form-control" />
+                <span asp-validation-for="Atlete.PhotoUrl" class="text-danger"></span>
+            </div>
+
+            @* ------ TAB LIST HEADER ------ *@
+
+            <ul class="nav nav-tabs mt-0 p-0" role="tablist">
+
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="#personalinfo" aria-selected="false" role="tab">Informação Pessoal</a>
+                </li>
+
+                @* <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#contacts" aria-selected="false" role="tab" >Contactos</a>
+            </li> *@
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="#emergencycontact" aria-selected="false" role="tab">Contactos Emêrgencia</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="#attachments" aria-selected="false" role="tab">Anexos</a>
+                </li>
+            </ul>
+
+            @* ------ TAB LIST BODY ------ *@
+
+            <div id="myTabContent" class="tab-content mt-1 p-0">
+
+                @* ************************ Contactos ****************** *@
+
+                @* <div class="tab-pane fade" id="contacts" role="tabpanel">
+                <div class="border p-3 pt-3" >
+
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.Email" class="p-0"></label>
+                        <input asp-for="Atlete.Email" type="email" class="form-control" />
+                        <span asp-validation-for="Atlete.Email" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.PhoneNumber" class="p-0"></label>
+                        <input asp-for="Atlete.PhoneNumber" type="tel" class="form-control" />
+                        <span asp-validation-for="Atlete.PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+            </div> *@
+
+                @* ************************ Contactos Emergência ****************** *@
+
+                <div class="tab-pane fade" id="emergencycontact" role="tabpanel">
+                    <div class="border p-3 pt-3">
+                        <div class="mb-3 row p-1">
+                            <label asp-for="Atlete.EmergencyContact" class="p-0"></label>
+                            <input asp-for="Atlete.EmergencyContact" class="form-control" />
+                            <span asp-validation-for="Atlete.EmergencyContact" class="text-danger"></span>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-6 p-1">
+                                <label asp-for="Atlete.EmergencyPhone" class="p-0"></label>
+                                <input asp-for="Atlete.EmergencyPhone" type="tel" class="form-control" />
+                                <span asp-validation-for="Atlete.EmergencyPhone" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-6 p-1">
+                                <label asp-for="Atlete.EmergencyEmail" class="p-0"></label>
+                                <input asp-for="Atlete.EmergencyEmail" type="email" class="form-control" />
+                                <span asp-validation-for="Atlete.EmergencyEmail" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                @* ************************ Informação Pessoal ****************** *@
+
+                <div class="tab-pane fade" id="personalinfo" role="tabpanel">
+                    <div class="border p-3 pt-3">
+                        <div class="mb-3 row p-1">
+                            <label asp-for="Atlete.BirthDate" class="p-0"></label>
+                            <input asp-for="Atlete.BirthDate" type="date" class="form-control" />
+                            <span asp-validation-for="Atlete.BirthDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="mb-3 col-4 p-1">
+                                <label asp-for="Atlete.CC" class="p-0"></label>
+                                <input asp-for="Atlete.CC" class="form-control" />
+                                <span asp-validation-for="Atlete.CC" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-4 p-1">
+                                <label asp-for="Atlete.FIN" class="p-0"></label>
+                                <input asp-for="Atlete.FIN" class="form-control" />
+                                <span asp-validation-for="Atlete.FIN" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-4 p-1">
+                                <label asp-for="Atlete.GenderId" class="p-0"></label>
+                                <select asp-for="Atlete.GenderId" asp-items="@Model.GenderList" class="form-control">
+                                    <option disabled selected>-- Selecionar Opção --</option>
+                                </select>
+                                <span asp-validation-for="Atlete.Gender" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-8 p-1">
+                                <label asp-for="Atlete.Email" class="p-0"></label>
+                                <input asp-for="Atlete.Email" type="email" class="form-control" />
+                                <span asp-validation-for="Atlete.Email" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-4 p-1">
+                                <label asp-for="Atlete.PhoneNumber" class="p-0"></label>
+                                <input asp-for="Atlete.PhoneNumber" type="tel" class="form-control" />
+                                <span asp-validation-for="Atlete.PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 row p-1">
+                            <label asp-for="Atlete.Address" class="p-0"></label>
+                            <input asp-for="Atlete.Address" class="form-control" />
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-6 p-1">
+                                <label asp-for="Atlete.ZipCode" class="p-0"></label>
+                                <input asp-for="Atlete.ZipCode" class="form-control" />
+                            </div>
+                            <div class="mb-3 col-6 p-1">
+                                <label asp-for="Atlete.City" class="p-0"></label>
+                                <input asp-for="Atlete.City" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-4 p-1">
+                                <label asp-for="Atlete.Height" class="p-0"></label>
+                                <input asp-for="Atlete.Height" class="form-control" />
+                                <span asp-validation-for="Atlete.Height" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-4 p-1">
+                                <label asp-for="Atlete.Weight" class="p-0"></label>
+                                <input asp-for="Atlete.Weight" class="form-control" />
+                                <span asp-validation-for="Atlete.Weight" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-4 p-1">
+                                <label asp-for="Atlete.Age" class="p-0"></label>
+                                <input disabled asp-for="Atlete.Age" class="form-control" />
+                                @* <span asp-validation-for="Atlete.Age" class="text-danger"></span> *@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* *********************  Anexos  ****************** *@
+
+                <div class="tab-pane fade" id="attachments" role="tabpanel">
+                    <div class="row pt-4 pb-3">
+                        <div class="col-6">
+                            <h2 class="text-primary">Lista de Anexos</h2>
+                        </div>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr class="text-light">
+                                    <th>
+                                        Data
+                                    </th>
+                                    <th>
+                                        Título
+                                    </th>
+                                    <th>Classificação</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var attach in Model.AttachmentList.OrderByDescending(o => o.CreatedDate))
+                                {
+                                    <tr class="text-primary">
+                                        <td>@attach.CreatedDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                        <td>@attach.Title </td>
+                                        <td>@attach.FileClassificationType.Description</td>
+                                        <td>
+                                            <div class="w-0 btn-group" role="group">
+                                                <a asp-controller="File" asp-action="Download" asp-route-id="@attach.Id" class="btn btn-primary mx-1">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+
+                                                <a asp-controller="File" asp-action="Delete" asp-route-id="@attach.Id" class="btn btn-danger mx-1">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+            @* ********************* Botões Save e Cancel **************************** *@
+
+            <div class="row p-2">
+                <div class="col-6 col-md-3 p-1">
+                    <button type="submit" class="btn btn-primary form-control">Guardar</button>
+                </div>
+                <div class="col-6 col-md-3 p-1">
+                    <a asp-controller="Atlete" asp-action="Index" class="btn btn-outline-secondary form-control">
+                        Voltar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

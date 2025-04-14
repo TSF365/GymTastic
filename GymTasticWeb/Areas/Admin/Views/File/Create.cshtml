@@ -1,0 +1,77 @@
+﻿@model AtleteFileViewModel
+<div class="border p-3 mt-4">
+    <div class="row pb-2">
+        <h2 class="text-primary">Adicionar Anexo</h2>
+        <hr />
+    </div>
+    @* ********************* Atleta que fica com o documento associado **************************** *@
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3 row p-1">
+        <div class="col-9">
+            <label asp-for="Atlete.FullName" class="p-0"></label>
+            <input asp-for="Atlete.FullName" disabled class="form-control" />
+        </div>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        <input asp-for="Attachment.AtleteId" hidden />
+
+
+        @* ********************* Informação Documental **************************** *@
+
+        <div class="mb-3 row p-1">
+            <div class="col-9">
+                <label asp-for="Attachment.Title" class="p-0"></label>
+                <input asp-for="Attachment.Title" class="form-control" />
+                <span asp-validation-for="Attachment.Title" class="text-danger"></span>
+            </div>
+            <div class="col-3">
+                <label asp-for="Attachment.FileClassificationTypeId" class="p-0"></label>
+                <select asp-for="Attachment.FileClassificationTypeId" asp-items="@Model.FileClassificationTypeList" class="form-control">
+                    <option disabled selected>-- Selecionar Opção --</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="Attachment.Description" class="p-0"></label>
+            <textarea asp-for="Attachment.Description" class="form-control"></textarea>
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="Attachment.FileName" class="p-0"></label>
+            <input asp-for="Attachment.FileName" type="file" name="file" class="form-control" />
+            <span asp-validation-for="Attachment.FileName" class="text-danger"></span>
+        </div>
+        @* ********************* Botões Save e Cancel **************************** *@
+
+        <div class="row p-2">
+            <div class="col-6 col-md-3 p-1">
+                <button type="submit" class="btn btn-primary form-control">Guardar</button>
+            </div>
+            <div class="col-6 col-md-3 p-1">
+                <a asp-controller="Atlete" asp-action="Edit" asp-route-id="@Model.Atlete.Id" class="btn btn-outline-secondary form-control">
+                    Voltar
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            height: 300,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+        });
+    </script>
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

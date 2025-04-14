@@ -32,6 +32,7 @@ namespace GymTastic.Models.Models
         [Required(ErrorMessage = "É obrigatorio classificar os documentos que são carregados.")]
         [DisplayName("Tipo de Documento")]
         public int FileClassificationTypeId { get; set; }
+        [Required(ErrorMessage = "É obrigatório selecionar o tipo de documento.")]
         public FileClassificationType FileClassificationType { get; set; }
         [DisplayName("Data do Documento")]
         public DateTime CreatedDate { get; set; }

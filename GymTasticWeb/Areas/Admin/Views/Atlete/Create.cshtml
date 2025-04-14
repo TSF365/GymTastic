@@ -1,1 +1,179 @@
-﻿
+﻿@model AtleteViewModel
+
+<form method="post" class="row" enctype="multipart/form-data">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Novo Atleta</h2>
+            <hr />
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="Atlete.FirstName" class="p-0"></label>
+            <input asp-for="Atlete.FirstName" class="form-control" size="32" />
+            <span asp-validation-for="Atlete.FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="Atlete.LastName" class="p-0"></label>
+            <input asp-for="Atlete.LastName" class="form-control" />
+            <span asp-validation-for="Atlete.LastName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="Atlete.PhotoUrl" class="p-0"></label>
+            <input asp-for="Atlete.PhotoUrl" type="file" name="file" class="form-control" />
+            <span asp-validation-for="Atlete.PhotoUrl" class="text-danger"></span>
+        </div>
+
+
+
+        <ul class="nav nav-tabs mt-0 p-0" role="tablist">
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#personalinfo" aria-selected="false" role="tab">Informação Pessoal</a>
+            </li>
+
+            @* <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#contacts" aria-selected="false" role="tab" >Contactos</a>
+            </li> *@
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#emergencycontact" aria-selected="false" role="tab">Contactos Emêrgencia</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#attachments" aria-selected="false" role="tab">Anexos</a>
+            </li>
+        </ul>
+
+        <div id="myTabContent" class="tab-content mt-1 p-0">
+
+            @* ************************ Contactos ****************** *@
+
+            @* <div class="tab-pane fade" id="contacts" role="tabpanel">
+                <div class="border p-3 pt-3" >
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.PhoneNumber" class="p-0"></label>
+                        <input asp-for="Atlete.PhoneNumber" type="tel" class="form-control" />
+                        <span asp-validation-for="Atlete.PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.Email" class="p-0"></label>
+                        <input asp-for="Atlete.Email" type="email" class="form-control" />
+                        <span asp-validation-for="Atlete.Email" class="text-danger"></span>
+                    </div>
+                </div>
+            </div> *@
+
+            @* ************************ Contactos Emergência ****************** *@
+
+            <div class="tab-pane fade" id="emergencycontact" role="tabpanel">
+                <div class="border p-3 pt-3">
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.EmergencyContact" class="p-0"></label>
+                        <input asp-for="Atlete.EmergencyContact" class="form-control" />
+                        <span asp-validation-for="Atlete.EmergencyContact" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.EmergencyEmail" class="p-0"></label>
+                        <input asp-for="Atlete.EmergencyEmail" type="email" class="form-control" />
+                        <span asp-validation-for="Atlete.EmergencyEmail" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.EmergencyPhone" class="p-0"></label>
+                        <input asp-for="Atlete.EmergencyPhone" type="tel" class="form-control" />
+                        <span asp-validation-for="Atlete.EmergencyPhone" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            @* ************************ Informação Pessoal ****************** *@
+
+            <div class="tab-pane fade" id="personalinfo" role="tabpanel">
+                <div class="border p-3 pt-3">
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.BirthDate" class="p-0"></label>
+                        <input asp-for="Atlete.BirthDate" type="date" class="form-control" />
+                        <span asp-validation-for="Atlete.BirthDate" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-4 p-1">
+                            <label asp-for="Atlete.CC" class="p-0"></label>
+                            <input asp-for="Atlete.CC" class="form-control" />
+                            <span asp-validation-for="Atlete.CC" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 col-4 p-1">
+                            <label asp-for="Atlete.FIN" class="p-0"></label>
+                            <input asp-for="Atlete.FIN" class="form-control" />
+                            <span asp-validation-for="Atlete.FIN" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 col-4 p-1">
+                            <label asp-for="Atlete.GenderId" class="p-0"></label>
+                            <select asp-for="Atlete.GenderId" asp-items="@Model.GenderList" class="form-control">
+                                <option disabled selected>-- Selecionar Opção --</option>
+                            </select>
+                            <span asp-validation-for="Atlete.Gender" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-8 p-1">
+                            <label asp-for="Atlete.Email" class="p-0"></label>
+                            <input asp-for="Atlete.Email" type="email" class="form-control" />
+                            <span asp-validation-for="Atlete.Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 col-4 p-1">
+                            <label asp-for="Atlete.PhoneNumber" class="p-0"></label>
+                            <input asp-for="Atlete.PhoneNumber" type="tel" class="form-control" />
+                            <span asp-validation-for="Atlete.PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.Address" class="p-0"></label>
+                        <input asp-for="Atlete.Address" class="form-control" />
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-6 p-1">
+                            <label asp-for="Atlete.ZipCode" class="p-0"></label>
+                            <input asp-for="Atlete.ZipCode" class="form-control" />
+                        </div>
+                        <div class="mb-3 col-6 p-1">
+                            <label asp-for="Atlete.City" class="p-0"></label>
+                            <input asp-for="Atlete.City" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.Height" class="p-0"></label>
+                        <input asp-for="Atlete.Height" class="form-control" />
+                        <span asp-validation-for="Atlete.Height" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Atlete.Weight" class="p-0"></label>
+                        <input asp-for="Atlete.Weight" class="form-control" />
+                        <span asp-validation-for="Atlete.Weight" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            @* *********************  Anexos  ****************** *@
+
+            <div class="tab-pane fade" id="attachments" role="tabpanel">
+                <div class="border p-3 pt-3">
+                    <div class="mb-3 row p-1">
+                        <h4> Anexos - A implementar</h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        @* ********************* Botões Save e Cancel **************************** *@
+
+        <div class="row p-2">
+            <div class="col-6 col-md-3 p-1">
+                <button type="submit" class="btn btn-primary form-control">Guardar</button>
+            </div>
+            <div class="col-6 col-md-3 p-1">
+                <a asp-controller="Atlete" asp-action="Index" class="btn btn-outline-secondary form-control">
+                    Voltar
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
