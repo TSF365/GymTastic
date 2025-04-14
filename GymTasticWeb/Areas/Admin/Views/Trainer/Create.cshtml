@@ -1,17 +1,19 @@
 ﻿@model Trainer
+@if (User.IsInRole("Admin"))
+{
 
-<form method="post" class="row" enctype="multipart/form-data">
-    <div class="border p-3 mt-4">
-        <div class="row pb-2">
-            <h2 class="text-primary">Novo Treinador</h2>
-            <hr />
+    <form method="post" class="row" enctype="multipart/form-data">
+        <div class="border p-3 mt-4">
+            <div class="row pb-2">
+                <h2 class="text-primary">Novo Treinador</h2>
+                <hr />
+            </div>
+            <div class="mb-3 row p-1">
+                <label asp-for="FullName" class="p-0"></label>
+                <input asp-for="FullName" class="form-control" size="32" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
         </div>
-        <div class="mb-3 row p-1">
-            <label asp-for="FullName" class="p-0"></label>
-            <input asp-for="FullName" class="form-control" size="32" />
-            <span asp-validation-for="FullName" class="text-danger"></span>
-        </div>
-
 
 
 
@@ -69,17 +71,19 @@
                 </div>
             </div>
 
-        @* ********************* Botões Save e Cancel **************************** *@
+            @* ********************* Botões Save e Cancel **************************** *@
 
-        <div class="row p-2">
-            <div class="col-6 col-md-3 p-1">
-                <button type="submit" class="btn btn-primary form-control">Guardar</button>
-            </div>
-            <div class="col-6 col-md-3 p-1">
-                <a asp-controller="Trainer" asp-action="Index" class="btn btn-outline-secondary form-control">
-                    Voltar
-                </a>
+            <div class="row p-2">
+                <div class="col-6 col-md-3 p-1">
+                    <button type="submit" class="btn btn-primary form-control">Guardar</button>
+                </div>
+                <div class="col-6 col-md-3 p-1">
+                    <a asp-controller="Trainer" asp-action="Index" class="btn btn-outline-secondary form-control">
+                        Voltar
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+
+}

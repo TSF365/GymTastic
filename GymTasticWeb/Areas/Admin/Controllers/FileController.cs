@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace GymTasticWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class FileController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -172,7 +173,6 @@ namespace GymTasticWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Edit(AtleteFileViewModel atleteFileViewModel)
         {
 

@@ -2,6 +2,7 @@
 using GymTastic.DataAccess.Repository.IRepository;
 using GymTastic.Models.Models;
 using GymTastic.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace GymTasticWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AtleteController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

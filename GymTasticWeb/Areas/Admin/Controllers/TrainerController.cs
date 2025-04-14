@@ -1,12 +1,14 @@
 ﻿using GymTastic.DataAccess.Repository.IRepository;
 using GymTastic.Models.Models;
 using GymTastic.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GymTasticWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class TrainerController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

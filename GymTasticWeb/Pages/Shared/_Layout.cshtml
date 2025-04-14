@@ -16,30 +16,34 @@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">GymTastic</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Backoffice
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Atlete" asp-action="Index">Atletas</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Trainer" asp-action="Index">Treinadores</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Classes" asp-action="Index">Aulas</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <partial name="_LoginPartial" />
-                    </ul>
-                </div>
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Backoffice
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Atlete" asp-action="Index">Atletas</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Trainer" asp-action="Index">Treinadores</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Classes" asp-action="Index">Aulas</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                }
+                <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
@@ -48,10 +52,9 @@
             @RenderBody()
         </main>
     </div>
-    @RenderSection("Scripts", required: false)
     <footer class="border-top footer text-light bg-primary">
         <div class="container">
-            &copy; 2025 - GymTastic - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2025 - GymTastic
         </div>
     </footer>
 
@@ -60,6 +63,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js" asp-append-version="true"></script>
-
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
