@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,6 +35,12 @@ namespace GymTastic.Models.Models
             }
         }
 
+        public string? UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        [ValidateNever]
+        public IdentityUser User { get; set; }
+
         // Dados Pessoais
 
         [Required(ErrorMessage = "O preenchimento da Data de Nascimento é obrigatório")]
@@ -60,6 +67,7 @@ namespace GymTastic.Models.Models
 
         [Required(ErrorMessage = "É obrigatório o preenchimento do campo Sexo.")]
         [DisplayName("Sexo")]
+        [Range(1, int.MaxValue)]
         public int GenderId { get; set; }
         [ForeignKey("GenderId")]
         [ValidateNever]
@@ -67,7 +75,10 @@ namespace GymTastic.Models.Models
 
         [Required(ErrorMessage = "O preenchimento do Número de Identificação Fiscal é obrigatório")]
         [DisplayName("NIF")]
-        public int FIN { get; set; }
+        [StringLength(9, ErrorMessage = "O NIF deve ter 9 dígitos.")]
+        [RegularExpression(@"^\d{9}$", ErrorMessage = "O NIF deve conter apenas 9 dígitos.")]
+        public string FIN { get; set; }
+
 
         [Required(ErrorMessage = "O preenchimento do Cartão de Cidadão é obrigatório")]
         [DisplayName("Cartão de Cidadão")]

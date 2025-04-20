@@ -25,7 +25,7 @@
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Backoffice
+                                    Admin
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
@@ -40,6 +40,30 @@
                                 </ul>
                             </li>
                             
+                        </ul>
+                    </div>
+                }
+                @if (User.IsInRole("Atlete") || User.IsInRole("Admin"))
+                {
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Atlete
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Atlete" asp-controller="Atlete" asp-action="Index">Atletas</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Atlete" asp-controller="Trainer" asp-action="Index">Treinadores</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Atlete" asp-controller="Classes" asp-action="ClassFeedback">Enviar Feedback</a>
+                                    </li>
+                                </ul>
+                            </li>
+
                         </ul>
                     </div>
                 }

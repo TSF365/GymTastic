@@ -40,29 +40,29 @@ namespace GymTastic.DataAccess.Data
                 new Gender { Id = 2, GenderDescription = "Masculino" }
                 );
 
-            builder.Entity<Atlete>().HasData(
-                new Atlete
-                {
-                    Id = 1,
-                    FirstName = "Tomás",
-                    LastName = "Santos Fernandes",
-                    BirthDate = DateTime.Parse("24/09/2007"),
-                    GenderId = 2,
-                    FIN = 2000000,
-                    CC = "12113131",
-                    InscriptionDate = DateTime.Parse("20/12/2022"),
-                    Email = "tomasantifernandes@gmail.com",
-                    PhoneNumber = "999999999",
-                    PhotoUrl = "",
-                    Address = "Estrada da Póvoa",
-                    ZipCode = "1750-224",
-                    City = "Lisbon",
-                    EmergencyContact = "Tomás",
-                    EmergencyPhone = "1212121",
-                    EmergencyEmail = "tomas@gmail.com",
-                    Height = 1.80f,
-                    Weight = 62.4f
-                });
+            //builder.Entity<Atlete>().HasData(
+            //    new Atlete
+            //    {
+            //        Id = 1,
+            //        FirstName = "Tomás",
+            //        LastName = "Santos Fernandes",
+            //        BirthDate = DateTime.Parse("24/09/2007"),
+            //        GenderId = 2,
+            //        FIN = 2000000,
+            //        CC = "12113131",
+            //        InscriptionDate = DateTime.Parse("20/12/2022"),
+            //        Email = "tomasantifernandes@gmail.com",
+            //        PhoneNumber = "999999999",
+            //        PhotoUrl = "",
+            //        Address = "Estrada da Póvoa",
+            //        ZipCode = "1750-224",
+            //        City = "Lisbon",
+            //        EmergencyContact = "Tomás",
+            //        EmergencyPhone = "1212121",
+            //        EmergencyEmail = "tomas@gmail.com",
+            //        Height = 1.80f,
+            //        Weight = 62.4f
+            //    });
         }
     }
 }

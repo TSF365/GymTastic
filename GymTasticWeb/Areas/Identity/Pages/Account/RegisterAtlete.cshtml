@@ -1,0 +1,150 @@
+﻿@page
+@model GymTasticWeb.Areas.Identity.Pages.Account.RegisterAtleteModel
+@{
+    ViewData["Title"] = "Registar Atleta";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" class="row g-3">
+    <div class="col-md-6">
+        <h4>Dados de Conta</h4>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Email" class="form-control" />
+            <label asp-for="Input.Email"></label>
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Password" class="form-control" />
+            <label asp-for="Input.Password"></label>
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.ConfirmPassword" class="form-control" />
+            <label asp-for="Input.ConfirmPassword"></label>
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <ul class="nav nav-tabs mt-0 p-0" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" data-bs-toggle="tab" href="#personalinfo" aria-selected="true" role="tab">Informação Pessoal</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#contacts" aria-selected="false" role="tab">Contactos</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#emergencycontact" aria-selected="false" role="tab">Contactos Emergência</a>
+            </li>
+        </ul>
+
+        <div id="myTabContent" class="tab-content mt-1 p-0">
+            <div class="tab-pane fade show active" id="personalinfo" role="tabpanel">
+                <h4>Dados Pessoais</h4>
+                <div class="row">
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.Atlete.FirstName" class="form-control" />
+                        <label asp-for="Input.Atlete.FirstName"></label>
+                        <span asp-validation-for="Input.Atlete.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.Atlete.LastName" class="form-control" />
+                        <label asp-for="Input.Atlete.LastName"></label>
+                        <span asp-validation-for="Input.Atlete.LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.Atlete.BirthDate" class="form-control" type="date" />
+                        <label asp-for="Input.Atlete.BirthDate"></label>
+                        <span asp-validation-for="Input.Atlete.BirthDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <select asp-for="Input.Atlete.GenderId" asp-items="Model.Input.Genders" class="form-select">
+                            <option value="">-- Seleciona o Género --</option>
+                        </select>
+                        <label asp-for="Input.Atlete.GenderId"></label>
+                        <span asp-validation-for="Input.Atlete.GenderId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.Atlete.Height" class="form-control" step="0.01" />
+                        <label asp-for="Input.Atlete.Height"></label>
+                        <span asp-validation-for="Input.Atlete.Height" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.Atlete.Weight" class="form-control" step="0.001" />
+                        <label asp-for="Input.Atlete.Weight"></label>
+                        <span asp-validation-for="Input.Atlete.Weight" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.Atlete.FIN" class="form-control" />
+                        <label asp-for="Input.Atlete.FIN"></label>
+                        <span asp-validation-for="Input.Atlete.FIN" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.Atlete.CC" class="form-control" />
+                        <label asp-for="Input.Atlete.CC"></label>
+                        <span asp-validation-for="Input.Atlete.CC" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="contacts" role="tabpanel">
+                <h4>Contactos</h4>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Input.Atlete.PhoneNumber" class="form-control" />
+                    <label asp-for="Input.Atlete.PhoneNumber"></label>
+                    <span asp-validation-for="Input.Atlete.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Input.Atlete.Email" class="form-control" />
+                    <label asp-for="Input.Atlete.Email"></label>
+                    <span asp-validation-for="Input.Atlete.Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Input.Atlete.Address" class="form-control" />
+                    <label asp-for="Input.Atlete.Address"></label>
+                    <span asp-validation-for="Input.Atlete.Address" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Input.Atlete.ZipCode" class="form-control" />
+                    <label asp-for="Input.Atlete.ZipCode"></label>
+                    <span asp-validation-for="Input.Atlete.ZipCode" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Input.Atlete.City" class="form-control" />
+                    <label asp-for="Input.Atlete.City"></label>
+                    <span asp-validation-for="Input.Atlete.City" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="emergencycontact" role="tabpanel">
+                <h4>Emergência</h4>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Input.Atlete.EmergencyContact" class="form-control" />
+                    <label asp-for="Input.Atlete.EmergencyContact"></label>
+                    <span asp-validation-for="Input.Atlete.EmergencyContact" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Input.Atlete.EmergencyPhone" class="form-control" />
+                    <label asp-for="Input.Atlete.EmergencyPhone"></label>
+                    <span asp-validation-for="Input.Atlete.EmergencyPhone" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Input.Atlete.EmergencyEmail" class="form-control" />
+                    <label asp-for="Input.Atlete.EmergencyEmail"></label>
+                    <span asp-validation-for="Input.Atlete.EmergencyEmail" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-lg btn-primary w-100 mt-3">Registar</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

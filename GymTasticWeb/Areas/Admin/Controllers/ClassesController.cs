@@ -56,6 +56,74 @@ namespace GymTasticWeb.Areas.Admin.Controllers
             return View(classesTrainerViewModel);
         }
 
+        public IActionResult Edit(int? id) 
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Classes classesResult = _unitOfWork.Classes.Get(i => i.Id == id);
+            if (classesResult == null)
+            {
+                return NotFound();
+            }
+
+            ClassesTrainerViewModel classesTrainerViewModel = new ClassesTrainerViewModel();
+            classesTrainerViewModel.Classes = classesResult;
+
+            classesTrainerViewModel.TrainerList = _unitOfWork.Trainer.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.FullName,
+                Value = u.Id.ToString()
+            });
+
+            return View(classesTrainerViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ClassesTrainerViewModel classesTrainerViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Classes.Update(classesTrainerViewModel.Classes);
+                _unitOfWork.Save();
+                TempData["success"] = "Aula atualizada com sucesso.";
+
+                return RedirectToAction("Index", "Classes");
+
+            }
+            return View();
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var classesResult = _unitOfWork.Classes.Get(u => u.Id == id);
+            if (classesResult == null)
+            {
+                return NotFound();
+            }
+            return View(classesResult);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePost(int? id)
+        {
+            var classesResult = _unitOfWork.Classes.Get(u => u.Id == id);
+            if (classesResult == null)
+            {
+                return NotFound();
+            }
+            _unitOfWork.Classes.Remove(classesResult);
+            _unitOfWork.Save();
+            TempData["success"] = "Aula apagada com sucesso.";
+            return RedirectToAction("Index", "Classes");
+
+        }
+
         #region AJAX API CALLS
 
         [HttpGet]

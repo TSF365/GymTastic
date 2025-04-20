@@ -2,11 +2,11 @@
     var dataTable = $('#tblData').DataTable({
         "ajax": { url: '/admin/classes/getall' },
         "columns": [
-            { data: 'classname', "width": "15%" },
-            { data: 'classtime', "width": "8%" },
+            { data: 'classname', "width": "8%" },
+            { data: 'classtime', "width": "15%" },
             { data: 'email', "width": "8%" },
             { data: 'speciality', "width": "3%" },
-            { data: 'maxatletes', "width": "3%" },
+            { data: 'maxatletes', "width": "5%" },
             {
                 data: 'id',
                 "render": function (data) {

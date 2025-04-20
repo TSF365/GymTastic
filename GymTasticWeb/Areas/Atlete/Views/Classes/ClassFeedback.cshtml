@@ -1,0 +1,41 @@
+﻿@using GymTastic.Models.ViewModels
+@model FeedbackClassViewModel
+
+<div class="border p-3 mt-4">
+    <div class="row pb-2">
+        <h2 class="text-primary">Enviar Feedback</h2>
+        <hr />
+    </div>
+
+    <form method="post">
+        <div class="mb-3">
+            <label asp-for="ClassFeedback.ClassId" class="form-label">Aula</label>
+            <select asp-for="ClassFeedback.ClassId" asp-items="Model.ClassesList" class="form-control">
+                <option disabled selected>-- Selecionar Aula --</option>
+            </select>
+            <span asp-validation-for="ClassFeedback.ClassId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ClassFeedback.Rating" class="form-label"></label>
+            <input asp-for="ClassFeedback.Rating" class="form-control" />
+            <span asp-validation-for="ClassFeedback.Rating" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ClassFeedback.Comment" class="form-label">Comentário</label>
+            <textarea asp-for="ClassFeedback.Comment" class="form-control"></textarea>
+            <span asp-validation-for="ClassFeedback.Comment" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-primary w-100">Guardar</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-area="" asp-page="/Index" class="btn btn-outline-secondary w-100">Voltar</a>
+            </div>
+        </div>
+    </form>
+</div>
+

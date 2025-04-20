@@ -7,6 +7,8 @@ using GymTastic.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using GymTasticWeb.Services;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +54,18 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/Files"
 
 });
+
+var defaultCulture = new CultureInfo("pt-PT");
+defaultCulture.NumberFormat.NumberDecimalSeparator = ".";
+
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(defaultCulture),
+    SupportedCultures = new List<CultureInfo> { defaultCulture },
+    SupportedUICultures = new List<CultureInfo> { defaultCulture }
+};
+
+app.UseRequestLocalization(localizationOptions);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

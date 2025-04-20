@@ -29,7 +29,7 @@ namespace GymTasticWeb.Areas.Admin.Controllers
         public IActionResult Create()
         {
             AtleteViewModel atleteViewModel = new AtleteViewModel();
-            atleteViewModel.Atlete = new Atlete();
+            atleteViewModel.Atlete = new GymTastic.Models.Models.Atlete();
             atleteViewModel.GenderList = _unitOfWork.Gender.GetAll().Select(u => new SelectListItem
             {
                 Text = u.GenderDescription,
