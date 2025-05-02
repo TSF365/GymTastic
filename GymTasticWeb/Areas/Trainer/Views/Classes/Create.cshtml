@@ -1,0 +1,75 @@
+﻿@using GymTastic.Models.ViewModels
+@model ClassesTrainerViewModel
+@if (User.IsInRole("Trainer"))
+{
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Adicionar Aula</h2>
+            <hr />
+        </div>
+        <form method="post" enctype="multipart/form-data">
+
+            <div class="mb-3 row p-1">
+                <div class="col-6">
+                    <label asp-for="Classes.ClassName" class="p-0"></label>
+                    <input asp-for="Classes.ClassName" class="form-control" />
+                    <span asp-validation-for="Classes.ClassName" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="Classes.ClassTime" class="p-0"></label>
+                    <input asp-for="Classes.ClassTime" class="form-control" type="date">
+                    <span asp-validation-for="Classes.ClassTime" class="text-danger"></span>
+                </div>
+                <div class="mb-3 row p-1">
+                    <div class="col-4 mt-4">
+                        <select asp-for="Classes.TrainerId" asp-items="@Model.TrainerList" class="form-control">
+                            <option value="" disabled selected>-- Selecionar Opção --</option>
+                        </select>
+                    </div>
+                    <div class="col-8">
+                        <label asp-for="Classes.MaxAtletes" class="p-0"></label>
+                        <input asp-for="Classes.MaxAtletes" type="number" class="form-control" />
+                        <span asp-validation-for="Classes.MaxAtletes" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 row p-1">
+
+            </div>
+            @* ********************* Botões Save e Cancel **************************** *@
+
+            <div class="row p-2">
+                <div class="col-6 col-md-3 p-1">
+                    <button type="submit" class="btn btn-primary form-control">Guardar</button>
+                </div>
+                <div class="col-6 col-md-3 p-1">
+                    <a asp-controller="Classes" asp-action="Index" class="btn btn-outline-secondary form-control">
+                        Voltar
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+    @section Scripts {
+    <script>
+        tinymce.init({
+        selector: 'textarea',
+        height: 300,
+        plugins: [
+        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+        'insertdatetime', 'media', 'table', 'help', 'wordcount'
+        ],
+        toolbar: 'undo redo | blocks | ' +
+        'bold italic backcolor | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'removeformat | help',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+        });
+    </script>
+    @{
+            <partial name="_ValidationScriptsPartial" />
+        }
+}
+}

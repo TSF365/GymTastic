@@ -7,7 +7,7 @@
 <h1>@ViewData["Title"]</h1>
 
 <form method="post" class="row g-3">
-    <div class="col-md-6">
+    <div class="col">
         <h4>Dados de Conta</h4>
 
         <div class="form-floating mb-3">
@@ -140,7 +140,12 @@
         </div>
 
         <div class="col-12">
-            <button type="submit" class="btn btn-lg btn-primary w-100 mt-3">Registar</button>
+            <button type="submit" class="btn btn-lg btn-primary w-100 mt-3 mb-3">Registar</button>
+            <div>
+                <p>
+                    <a asp-page="./Login" class="btn btn-outline-secondary btn-lg w-100">Login</a>
+                </p>
+            </div>
         </div>
     </div>
 </form>

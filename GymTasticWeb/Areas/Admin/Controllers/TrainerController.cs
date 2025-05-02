@@ -24,13 +24,13 @@ namespace GymTasticWeb.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-            Trainer trainer = new Trainer();
+            GymTastic.Models.Models.Trainer trainer = new GymTastic.Models.Models.Trainer();
 
             return View(trainer);
         }
 
         [HttpPost]
-        public IActionResult Create(Trainer trainer)
+        public IActionResult Create(GymTastic.Models.Models.Trainer trainer)
         {
             if (ModelState.IsValid)
             {
@@ -53,7 +53,7 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Trainer trainer = new Trainer();
+            GymTastic.Models.Models.Trainer trainer = new GymTastic.Models.Models.Trainer();
             trainer = trainerResult;
 
 
@@ -61,7 +61,7 @@ namespace GymTasticWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Trainer trainer)
+        public IActionResult Edit(GymTastic.Models.Models.Trainer trainer)
         {
             if (ModelState.IsValid)
             {

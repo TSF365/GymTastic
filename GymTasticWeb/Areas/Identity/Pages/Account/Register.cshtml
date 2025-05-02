@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "Register";
 }
-
+@if (User.IsInRole("Admin"))
+{
 <h1>@ViewData["Title"]</h1>
 
 <div class="row">
@@ -66,7 +67,7 @@
         </section>
     </div> *@
 </div>
-
+}
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

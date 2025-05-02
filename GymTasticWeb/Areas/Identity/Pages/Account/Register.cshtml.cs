@@ -135,7 +135,7 @@ namespace GymTasticWeb.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(GymTastic.Models.Models.Trainer trainer, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -152,6 +152,7 @@ namespace GymTasticWeb.Areas.Identity.Pages.Account
                     if (!String.IsNullOrEmpty(Input.Role))
                     {
                         await _userManager.AddToRoleAsync(user, Input.Role);
+                        trainer.Email = Input.Email;
                     }
                     else
                     {

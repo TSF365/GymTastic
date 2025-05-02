@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore;
 
-namespace GymTasticWeb.Areas.Trainer.Controllers
+namespace GymTasticWeb.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Area("Trainer")]
+    [Authorize(Roles = "Trainer")]
     public class ClassesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
