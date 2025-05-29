@@ -7,8 +7,8 @@
                 <h2 class="text-primary">Lista de Aulas</h2>
             </div>
             <div class="col-md-6 text-end mb-2">
-                <a asp-controller="Classes" asp-action="Create" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> Adicionar Aula
+                <a asp-controller="PersonalizedTraining" asp-action="Create" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Adicionar Treino
                 </a>
             </div>
         </div>
@@ -16,11 +16,11 @@
             <table id="tblData" class="table table-bordered table-striped" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Nome da Aula</th>
-                        <th>Dia</th>
-                        <th>Email</th>
-                        <th>Especialidade</th>
-                        <th>Máximo de Atletas</th>
+                        <th>Nome do Treino</th>
+                        <th>Atleta</th>
+                        <th>Treinador</th>
+                        <th>Objetivo</th>
+                        <th>Email Treinador</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -28,6 +28,6 @@
         </div>
     </div>
     @section Scripts {
-        <script src="~/js/classes.js"></script>
+        <script src="~/js/ptraining.js"></script>
     }
 }

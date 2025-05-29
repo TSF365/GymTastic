@@ -1,0 +1,105 @@
+﻿@page
+@model GymTasticWeb.Areas.Identity.Pages.Account.RegisterTrainerModel
+@{
+    ViewData["Title"] = "Registar Treinador";
+}
+@if(User.IsInRole("Admin")){
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" class="row g-3">
+    <div class="col">
+        <h4>Dados de Conta</h4>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Email" class="form-control" />
+            <label asp-for="Input.Email"></label>
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Password" class="form-control" />
+            <label asp-for="Input.Password"></label>
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.ConfirmPassword" class="form-control" />
+            <label asp-for="Input.ConfirmPassword"></label>
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <ul class="nav nav-tabs mt-0 p-0" role="tablist">
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#personalinfo" aria-selected="false" role="tab">Informação Pessoal</a>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#trainerinfo" aria-selected="false" role="tab">Informação Treinador</a>
+            </li>
+        </ul>
+
+        <div id="myTabContent" class="tab-content mt-1 p-0">
+
+            @* ************************ Informação Treinador ****************** *@
+
+            <div class="tab-pane fade" id="trainerinfo" role="tabpanel">
+                <div class="border p-3 pt-3">
+                    <div class="mb-3 row p-1">
+                        <label asp-for="Input.Trainer.Specialty" class="p-0"></label>
+                        <input asp-for="Input.Trainer.Specialty" class="form-control" />
+                        <span asp-validation-for="Input.Trainer.Specialty" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 row p-1">
+                       <div class="col-6">
+                        <label asp-for="Input.Trainer.TPTD" class="p-0"></label>
+                        <input asp-for="Input.Trainer.TPTD" class="form-control" />
+                        <span asp-validation-for="Input.Trainer.TPTD" class="text-danger"></span>
+                       </div>
+                       <div class="col-6">
+
+                        <label asp-for="Input.Trainer.TptdDate" class="p-0"></label>
+                        <input asp-for="Input.Trainer.TptdDate" type="date" class="form-control" />
+                        <span asp-validation-for="Input.Trainer.TptdDate" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            @* ************************ Informação Pessoal ****************** *@
+
+            <div class="tab-pane fade" id="personalinfo" role="tabpanel">
+                <div class="border p-3 pt-3">
+                    <div class="row">
+                        <div class="mb-3 col-8 p-1">
+                            <label asp-for="Input.Trainer.Email" class="p-0"></label>
+                            <input asp-for="Input.Trainer.Email" type="email" class="form-control" />
+                            <span asp-validation-for="Input.Trainer.Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 col-4 p-1">
+                            <label asp-for="Input.Trainer.PhoneNumber" class="p-0"></label>
+                            <input asp-for="Input.Trainer.PhoneNumber" type="tel" class="form-control" />
+                            <span asp-validation-for="Input.Trainer.PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 col-8 p-1">
+                            <label asp-for="Input.Trainer.FullName" class="p-0"></label>
+                            <input asp-for="Input.Trainer.FullName" type="text" class="form-control" />
+                            <span asp-validation-for="Input.Trainer.FullName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-lg btn-primary w-100 mt-3 mb-3">Registar</button>
+            <div>
+                <p>
+                    <a asp-page="./Login" class="btn btn-outline-secondary btn-lg w-100">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</form>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

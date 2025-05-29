@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +26,11 @@ namespace GymTastic.Models.Models
         [Display(Name = "Especialidade")]
         public string Specialty { get; set; }
 
+        public string? UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        [ValidateNever]
+        public IdentityUser User { get; set; }
 
         // Titulo Profissional de Treinador Desportivo
 

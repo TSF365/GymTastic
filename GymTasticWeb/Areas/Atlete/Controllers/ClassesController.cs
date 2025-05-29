@@ -71,7 +71,7 @@ namespace GymTasticWeb.Areas.Atlete.Controllers
                 _unitOfWork.ClassFeedback.Add(feedbackClassViewModel.ClassFeedback);
                 _unitOfWork.Save();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             feedbackClassViewModel.ClassesList = _unitOfWork.Classes.GetAll().Select(c => new SelectListItem

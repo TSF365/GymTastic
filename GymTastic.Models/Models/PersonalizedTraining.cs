@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -21,11 +22,13 @@ namespace GymTastic.Models.Models
         [Required(ErrorMessage = "O Treinador do Treino é obrigatório.")]
         [DisplayName("Treinador")]
         public int TrainerId { get; set; }
+        [ValidateNever]
         public Trainer Trainer { get; set; }
 
         [Required(ErrorMessage = "O Atleta do Treino é obrigatório.")]
         [DisplayName("Atleta")]
         public int AtleteId { get; set; }
+        [ValidateNever]
         public Atlete Atlete { get; set; }
 
         [Required(ErrorMessage = "O Objetivo do Treino é obrigatório.")]

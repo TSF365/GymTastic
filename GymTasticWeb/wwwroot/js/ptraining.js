@@ -1,20 +1,21 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     var dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/trainer/classes/getall' },
+        "responsive": true,
+        "ajax": { url: '/admin/PersonalizedTraining/getall' },
         "columns": [
-            { data: 'classname', "width": "8%" },
-            { data: 'classtime', "width": "10%" },
-            { data: 'email', "width": "8%" },
-            { data: 'speciality', "width": "3%" },
-            { data: 'maxatletes', "width": "10%" },
+            { data: 'trainingname', "width": "8%" },
+            { data: 'atlete', "width": "10%" },
+            { data: 'trainer', "width": "8%" },
+            { data: 'trainingobjective', "width": "3%" },
+            { data: 'email', "width": "10%" },
             {
                 data: 'id',
                 "render": function (data) {
                     return `<div class="w-0 btn-group" role="group">
-                                <a href="/trainer/classes/edit?id=${data}" class="btn btn-primary mx-1">
+                                <a href="/admin/PersonalizedTraining/edit?id=${data}" class="btn btn-primary mx-1">
                                    <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <a href="/trainer/classes/delete?id=${data}" class="btn btn-danger mx-1">
+                                <a href="/admin/PersonalizedTraining/delete?id=${data}" class="btn btn-danger mx-1">
                                    <i class="bi bi-trash"></i>
                                 </a>
                             </div>`;

@@ -22,24 +22,24 @@ namespace GymTasticWeb.Areas.Admin.Controllers
             return View(trainersList);
         }
 
-        public IActionResult Create()
-        {
-            GymTastic.Models.Models.Trainer trainer = new GymTastic.Models.Models.Trainer();
+        //public IActionResult Create()
+        //{
+        //    GymTastic.Models.Models.Trainer trainer = new GymTastic.Models.Models.Trainer();
 
-            return View(trainer);
-        }
+        //    return View(trainer);
+        //}
 
-        [HttpPost]
-        public IActionResult Create(GymTastic.Models.Models.Trainer trainer)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Trainer.Add(trainer);
-                _unitOfWork.Save();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(trainer);
-        }
+        //[HttpPost]
+        //public IActionResult Create(GymTastic.Models.Models.Trainer trainer)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _unitOfWork.Trainer.Add(trainer);
+        //        _unitOfWork.Save();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(trainer);
+        //}
 
         public IActionResult Edit(int? id)
         {
