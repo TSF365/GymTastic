@@ -12,7 +12,7 @@
                 data: 'id',
                 "render": function (data) {
                     return `<div class="w-0 btn-group" role="group">
-                                <a href="/admin/PersonalizedTraining/edit?id=${data}" class="btn btn-primary mx-1">
+                                <a href="/admin/PersonalizedTraining/edit?id=${data}" class="btn btn-warning mx-1">
                                    <i class="bi bi-pencil-square"></i>
                                 </a>
                                 <a href="/admin/PersonalizedTraining/delete?id=${data}" class="btn btn-danger mx-1">

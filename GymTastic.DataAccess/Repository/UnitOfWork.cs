@@ -17,10 +17,11 @@ namespace GymTastic.DataAccess.Repository
         public IGenderRepository Gender { get; private set; }
         public IPersonalizedTrainingRepository PersonalizedTraining { get; private set; }
         public ITrainerRepository Trainer { get; private set; }
-
         public IAttachmentRepository Attachment { get; private set; }
-        
         public IFileClassificationTypeRepository FileClassificationType { get; private set; }
+        public ISpecialityRepository Speciality { get; private set; }
+        public ITrainerSpecialityRepository TrainerSpeciality { get; private set; }
+        public IClassRegistrationRepository ClassRegistration { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -33,6 +34,9 @@ namespace GymTastic.DataAccess.Repository
             Trainer = new TrainerRepository(_db);
             Attachment = new AttachmentRepository(_db);
             FileClassificationType = new FileClassificationTypeRepository(_db);
+            Speciality = new SpecialityRepository(_db);
+            TrainerSpeciality = new TrainerSpecialityRepository(_db);
+            ClassRegistration = new ClassRegistrationRepository(_db);
         }
 
         public void Save()

@@ -83,7 +83,7 @@
                         <span asp-validation-for="Input.Atlete.FIN" class="text-danger"></span>
                     </div>
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="Input.Atlete.CC" class="form-control" />
+                        <input asp-for="Input.Atlete.CC" class="form-control" type="number"/>
                         <label asp-for="Input.Atlete.CC"></label>
                         <span asp-validation-for="Input.Atlete.CC" class="text-danger"></span>
                     </div>
@@ -93,7 +93,7 @@
             <div class="tab-pane fade" id="contacts" role="tabpanel">
                 <h4>Contactos</h4>
                 <div class="form-floating mb-3 col-md-6">
-                    <input asp-for="Input.Atlete.PhoneNumber" class="form-control" />
+                    <input asp-for="Input.Atlete.PhoneNumber" class="form-control" type="number"/>
                     <label asp-for="Input.Atlete.PhoneNumber"></label>
                     <span asp-validation-for="Input.Atlete.PhoneNumber" class="text-danger"></span>
                 </div>

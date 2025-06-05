@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore;
 
-namespace GymTasticWeb.Areas.Trainer.Controllers
+namespace GymTasticWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
@@ -32,6 +32,11 @@ namespace GymTasticWeb.Areas.Trainer.Controllers
                 Text = u.FullName,
                 Value = u.Id.ToString()
             });
+            classesTrainerViewModel.SpecialityList = _unitOfWork.Speciality.GetAll().Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
+            });
 
             return View(classesTrainerViewModel);
         }
@@ -51,6 +56,11 @@ namespace GymTasticWeb.Areas.Trainer.Controllers
             {
                 Text = u.FullName,
                 Value = u.Id.ToString()
+            });
+            classesTrainerViewModel.SpecialityList = _unitOfWork.Speciality.GetAll().Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
             });
 
             return View(classesTrainerViewModel);
@@ -76,6 +86,11 @@ namespace GymTasticWeb.Areas.Trainer.Controllers
                 Text = u.FullName,
                 Value = u.Id.ToString()
             });
+            classesTrainerViewModel.SpecialityList = _unitOfWork.Speciality.GetAll().Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
+            });
 
             return View(classesTrainerViewModel);
         }
@@ -92,6 +107,7 @@ namespace GymTasticWeb.Areas.Trainer.Controllers
                 return RedirectToAction("Index", "Classes");
 
             }
+
             return View();
         }
 
@@ -123,26 +139,47 @@ namespace GymTasticWeb.Areas.Trainer.Controllers
             return RedirectToAction("Index", "Classes");
 
         }
+        //public IActionResult Feedbacks()
+        //{
+        //    var feedbacks = _unitOfWork.ClassFeedback
+        //        .GetAll(includeProperties: "Class,Atlete")
+        //        .OrderByDescending(f => f.FeedbackDate)
+        //        .ToList();
+
+        //    return View(feedbacks);
+        //}
+
+        public IActionResult Feedbacks()
+        {
+            return View(); 
+        }
+
 
         #region AJAX API CALLS
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var classesList = _unitOfWork.Classes.GetAll(includeProperties: "Trainer")
-                                                 .Select(u => new
-                                                 {
-                                                     id = u.Id,
-                                                     classname = u.ClassName,
-                                                     classtime = u.ClassTime,
-                                                     trainerid = u.TrainerId,
-                                                     email = u.Trainer.Email,
-                                                     speciality = u.Trainer.Specialty,
-                                                     maxatletes = u.MaxAtletes,
-                                                 })
-                                                 .ToList();
-            return Json(new { data = classesList });
+            var classesList = _unitOfWork.Classes.GetAll(includeProperties: "Trainer").ToList();
+            var specialities = _unitOfWork.Speciality.GetAll().ToList();
+
+            var result = classesList.Select(cls => new
+            {
+                id = cls.Id,
+                classname = cls.ClassName,
+                classtime = cls.ClassTime,
+                trainerid = cls.TrainerId,
+                email = cls.Trainer?.Email,
+                maxatletes = cls.MaxAtletes,
+                regatletes = cls.RegAtletes,
+                // Novo campo: especialidades do treinador
+                speciality = cls.Speciality != null ? cls.Speciality.Name : "N/A"
+            });
+
+            return Json(new { data = result });
         }
+
+        
 
         [HttpGet]
         public IActionResult Get(int? id)
@@ -150,6 +187,24 @@ namespace GymTasticWeb.Areas.Trainer.Controllers
             var classes = _unitOfWork.Classes.Get(u => u.Id == id, includeProperties: "Trainer");
 
             return View(classes);
+        }
+
+        [HttpGet]
+        public IActionResult GetAllFeedbacks()
+        {
+            var feedbacks = _unitOfWork.ClassFeedback
+                .GetAll(includeProperties: "Class,Atlete")
+                .OrderByDescending(f => f.FeedbackDate)
+                .Select(f => new
+                {
+                    className = f.Class?.ClassName,
+                    atleteName = f.Atlete?.FullName,
+                    comment = f.Comment,
+                    rating = f.Rating,
+                    date = f.FeedbackDate.ToString("dd/MM/yyyy")
+                }).ToList();
+
+            return Json(new { data = feedbacks });
         }
 
         #endregion

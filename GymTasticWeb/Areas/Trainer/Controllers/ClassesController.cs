@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore;
 
-namespace GymTasticWeb.Areas.Admin.Controllers
+namespace GymTasticWeb.Areas.Trainer.Controllers
 {
     [Area("Trainer")]
     [Authorize(Roles = "Trainer")]
@@ -32,6 +32,11 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                 Text = u.FullName,
                 Value = u.Id.ToString()
             });
+            classesTrainerViewModel.SpecialityList = _unitOfWork.Speciality.GetAll().Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
+            });
 
             return View(classesTrainerViewModel);
         }
@@ -52,11 +57,16 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                 Text = u.FullName,
                 Value = u.Id.ToString()
             });
+            classesTrainerViewModel.SpecialityList = _unitOfWork.Speciality.GetAll().Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
+            });
 
             return View(classesTrainerViewModel);
         }
 
-        public IActionResult Edit(int? id) 
+        public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
             {
@@ -75,6 +85,11 @@ namespace GymTasticWeb.Areas.Admin.Controllers
             {
                 Text = u.FullName,
                 Value = u.Id.ToString()
+            });
+            classesTrainerViewModel.SpecialityList = _unitOfWork.Speciality.GetAll().Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
             });
 
             return View(classesTrainerViewModel);
@@ -129,19 +144,23 @@ namespace GymTasticWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var classesList = _unitOfWork.Classes.GetAll(includeProperties: "Trainer")
-                                                 .Select(u => new
-                                                 {
-                                                     id = u.Id,
-                                                     classname = u.ClassName,
-                                                     classtime = u.ClassTime,
-                                                     trainerid = u.TrainerId,
-                                                     email = u.Trainer.Email,
-                                                     speciality = u.Trainer.Specialty,
-                                                     maxatletes = u.MaxAtletes,
-                                                 })
-                                                 .ToList();
-            return Json(new { data = classesList });
+            var classesList = _unitOfWork.Classes.GetAll(includeProperties: "Trainer").ToList();
+            var specialities = _unitOfWork.Speciality.GetAll().ToList();
+
+            var result = classesList.Select(cls => new
+            {
+                id = cls.Id,
+                classname = cls.ClassName,
+                classtime = cls.ClassTime,
+                trainerid = cls.TrainerId,
+                email = cls.Trainer?.Email,
+                maxatletes = cls.MaxAtletes,
+                regatletes = cls.RegAtletes,
+                // Novo campo: especialidades do treinador
+                speciality = cls.Speciality != null ? cls.Speciality.Name : "N/A"
+            });
+
+            return Json(new { data = result });
         }
 
         [HttpGet]

@@ -25,6 +25,13 @@
                             <option value="" disabled selected>-- Selecionar Opção --</option>
                         </select>
                     </div>
+                    <div class="col-6 mt-4">
+                        <label asp-for="Classes.SpecialityId" class="p-0"></label>
+                        <select asp-for="Classes.SpecialityId" asp-items="Model.SpecialityList" class="form-control form-select">
+                            <option value="" disabled selected>-- Selecionar Especialidade --</option>
+                        </select>
+                        <span asp-validation-for="Classes.SpecialityId" class="text-danger"></span>
+                    </div>
                     <div class="col-6">
                         <label asp-for="Classes.MaxAtletes" class="p-0"></label>
                         <input asp-for="Classes.MaxAtletes" type="number" class="form-control" />
@@ -39,7 +46,7 @@
 
             <div class="row p-2">
                 <div class="col-6 col-md-3 p-1">
-                    <button type="submit" class="btn btn-primary form-control">Guardar</button>
+                    <button type="submit" class="btn btn-success form-control">Guardar</button>
                 </div>
                 <div class="col-6 col-md-3 p-1">
                     <a asp-controller="Classes" asp-action="Index" class="btn btn-outline-secondary form-control">
@@ -50,22 +57,6 @@
         </form>
     </div>
     @section Scripts {
-    <script>
-        tinymce.init({
-        selector: 'textarea',
-        height: 300,
-        plugins: [
-        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-        'insertdatetime', 'media', 'table', 'help', 'wordcount'
-        ],
-        toolbar: 'undo redo | blocks | ' +
-        'bold italic backcolor | alignleft aligncenter ' +
-        'alignright alignjustify | bullist numlist outdent indent | ' +
-        'removeformat | help',
-        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
-        });
-    </script>
     @{
             <partial name="_ValidationScriptsPartial" />
         }

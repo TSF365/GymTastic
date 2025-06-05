@@ -29,12 +29,7 @@ namespace GymTasticWeb.Areas.Atlete.Controllers
         {
             var feedbackClassViewModel = new FeedbackClassViewModel
             {
-                ClassFeedback = new ClassFeedback(),
-                ClassesList = _unitOfWork.Classes.GetAll().Select(c => new SelectListItem
-                {
-                    Text = c.ClassName,
-                    Value = c.Id.ToString()
-                })
+                ClassFeedback = new ClassFeedback()
             };
 
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -46,6 +41,25 @@ namespace GymTasticWeb.Areas.Atlete.Controllers
             }
 
             feedbackClassViewModel.ClassFeedback.AtleteId = atlete.Id;
+
+            // IDs das aulas em que o atleta está inscrito
+            var registeredClassIds = _unitOfWork.ClassRegistration
+                .GetAll()
+                .Where(r => r.AtleteId == atlete.Id)
+                .Select(r => r.ClassId)
+                .ToList();
+
+            // Pega todas as aulas e filtra em memória
+            var eligibleClasses = _unitOfWork.Classes
+                .GetAll()
+                .Where(c => registeredClassIds.Contains(c.Id) && c.ClassTime < DateTime.Now)
+                .ToList();
+
+            feedbackClassViewModel.ClassesList = eligibleClasses.Select(c => new SelectListItem
+            {
+                Text = c.ClassName,
+                Value = c.Id.ToString()
+            });
 
             return View(feedbackClassViewModel);
         }
@@ -83,26 +97,135 @@ namespace GymTasticWeb.Areas.Atlete.Controllers
             return View(feedbackClassViewModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Register(int classId)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var atlete = _unitOfWork.Atlete.Get(a => a.UserId == userId);
+
+            if (atlete == null)
+            {
+                return NotFound("Atleta não encontrado.");
+            }
+
+            var selectedClass = _unitOfWork.Classes.Get(c => c.Id == classId);
+
+            if (selectedClass == null)
+            {
+                return NotFound("Aula não encontrada.");
+            }
+
+            if (selectedClass.RegAtletes >= selectedClass.MaxAtletes)
+            {
+                TempData["Error"] = "A aula está cheia. Por favor, escolha outra aula.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var alreadyRegistered = _unitOfWork.ClassRegistration.Get(
+                r => r.ClassId == classId && r.AtleteId == atlete.Id);
+
+            if (alreadyRegistered != null)
+            {
+                TempData["Error"] = "Você já está inscrito nesta aula.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var registration = new ClassRegistration
+            {
+                ClassId = classId,
+                AtleteId = atlete.Id
+            };
+
+            selectedClass.RegAtletes += 1;
+
+            _unitOfWork.ClassRegistration.Add(registration);
+            _unitOfWork.Classes.Update(selectedClass);
+            _unitOfWork.Save();
+
+            TempData["Success"] = "Inscrição realizada com sucesso!";
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Unregister(int classId)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var atlete = _unitOfWork.Atlete.Get(a => a.UserId == userId);
+
+            if (atlete == null)
+            {
+                return NotFound("Atleta não encontrado.");
+            }
+
+            var registration = _unitOfWork.ClassRegistration.Get(
+                r => r.ClassId == classId && r.AtleteId == atlete.Id);
+
+            if (registration == null)
+            {
+                TempData["Error"] = "Você não está inscrito nesta aula.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var selectedClass = _unitOfWork.Classes.Get(c => c.Id == classId);
+            if (selectedClass != null)
+            {
+                selectedClass.RegAtletes -= 1;
+                _unitOfWork.Classes.Update(selectedClass);
+            }
+
+            _unitOfWork.ClassRegistration.Remove(registration);
+            _unitOfWork.Save();
+
+            TempData["Success"] = "Inscrição cancelada com sucesso!";
+            return RedirectToAction(nameof(Index));
+        }
 
         #region AJAX API CALLS
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var classesList = _unitOfWork.Classes.GetAll(includeProperties: "Trainer")
-                .Select(u => new
-                {
-                    id = u.Id,
-                    classname = u.ClassName,
-                    classtime = u.ClassTime,
-                    trainerid = u.TrainerId,
-                    email = u.Trainer.Email,
-                    speciality = u.Trainer.Specialty,
-                    maxatletes = u.MaxAtletes,
-                })
-                .ToList();
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            return Json(new { data = classesList });
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Json(new { data = new List<object>() }); // ou retorna erro
+            }
+
+            var atlete = _unitOfWork.Atlete.Get(a => a.UserId == userId);
+
+            if (atlete == null)
+            {
+                return Json(new { data = new List<object>() }); // ou retorna erro
+            }
+
+            // Pega todos os IDs das aulas que o atleta já está inscrito
+            var registrations = _unitOfWork.ClassRegistration
+                .GetAll()
+                .Where(r => r.AtleteId == atlete.Id)
+                .Select(r => r.ClassId)
+                .ToHashSet();
+
+            // Pega a lista completa das aulas com dados relacionados (Trainer e Speciality)
+            var classesList = _unitOfWork.Classes.GetAll(includeProperties: "Trainer,Speciality").ToList();
+
+            // Projeta os dados para o formato que o DataTables espera
+            var result = classesList.Select(cls => new
+            {
+                id = cls.Id,
+                classname = cls.ClassName,
+                classtime = cls.ClassTime,
+                trainerid = cls.TrainerId,
+                email = cls.Trainer?.Email,
+                maxatletes = cls.MaxAtletes,
+                regatletes = cls.RegAtletes,
+                speciality = cls.Speciality != null ? cls.Speciality.Name : "N/A",
+                isRegistered = registrations.Contains(cls.Id)
+            });
+
+            return Json(new { data = result });
         }
 
         [HttpGet]

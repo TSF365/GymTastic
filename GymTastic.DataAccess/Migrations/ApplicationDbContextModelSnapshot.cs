@@ -40,7 +40,8 @@ namespace GymTastic.DataAccess.Migrations
 
                     b.Property<string>("CC")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -63,8 +64,8 @@ namespace GymTastic.DataAccess.Migrations
 
                     b.Property<string>("EmergencyPhone")
                         .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<string>("FIN")
                         .IsRequired()
@@ -92,11 +93,8 @@ namespace GymTastic.DataAccess.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhotoUrl")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -208,6 +206,25 @@ namespace GymTastic.DataAccess.Migrations
                     b.ToTable("ClassFeedbacks");
                 });
 
+            modelBuilder.Entity("GymTastic.Models.Models.ClassRegistration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AtleteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ClassRegistrations");
+                });
+
             modelBuilder.Entity("GymTastic.Models.Models.Classes", b =>
                 {
                     b.Property<int>("Id")
@@ -227,11 +244,20 @@ namespace GymTastic.DataAccess.Migrations
                     b.Property<int>("MaxAtletes")
                         .HasColumnType("int");
 
+                    b.Property<int>("RegAtletes")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SpecialityId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.Property<int?>("TrainerId")
                         .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SpecialityId");
 
                     b.HasIndex("TrainerId");
 
@@ -325,6 +351,35 @@ namespace GymTastic.DataAccess.Migrations
                     b.ToTable("PersonalizedTraining");
                 });
 
+            modelBuilder.Entity("GymTastic.Models.Models.Speciality", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Specialities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Yoga"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Pilates"
+                        });
+                });
+
             modelBuilder.Entity("GymTastic.Models.Models.Trainer", b =>
                 {
                     b.Property<int>("Id")
@@ -348,11 +403,6 @@ namespace GymTastic.DataAccess.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
-                    b.Property<string>("Specialty")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
                     b.Property<int>("TPTD")
                         .HasColumnType("int");
 
@@ -367,6 +417,25 @@ namespace GymTastic.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Trainers");
+                });
+
+            modelBuilder.Entity("GymTastic.Models.Models.TrainerSpeciality", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Id_Speciality")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_Trainer")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("TrainerSpecialities");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -624,11 +693,19 @@ namespace GymTastic.DataAccess.Migrations
 
             modelBuilder.Entity("GymTastic.Models.Models.Classes", b =>
                 {
+                    b.HasOne("GymTastic.Models.Models.Speciality", "Speciality")
+                        .WithMany()
+                        .HasForeignKey("SpecialityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("GymTastic.Models.Models.Trainer", "Trainer")
                         .WithMany()
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Speciality");
 
                     b.Navigation("Trainer");
                 });

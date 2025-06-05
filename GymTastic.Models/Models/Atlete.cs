@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using GymTastic.Utility;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
@@ -41,11 +42,18 @@ namespace GymTastic.Models.Models
         [ValidateNever]
         public IdentityUser User { get; set; }
 
+        //public int SpecialtyId { get; set; }
+
+        //[ForeignKey("SpecialtyId")]
+        //[ValidateNever]
+        //public Speciality Speciality { get; set; }
+
         // Dados Pessoais
 
         [Required(ErrorMessage = "O preenchimento da Data de Nascimento é obrigatório")]
         [Display(Name = "Data de Nascimento")]
-        public DateTime BirthDate { get; set; }
+        [BirthDateValidation]
+        public DateTime BirthDate { get; set; } 
 
         [DisplayName("Idade")]
         public int Age
@@ -82,6 +90,8 @@ namespace GymTastic.Models.Models
 
         [Required(ErrorMessage = "O preenchimento do Cartão de Cidadão é obrigatório")]
         [DisplayName("Cartão de Cidadão")]
+        [StringLength(8, ErrorMessage = "O Cartão de Cidadão deve ter 8 dígitos.")]
+        [RegularExpression(@"^\d{8}$", ErrorMessage = "O Cartão de Cidadão deve conter apenas 8 dígitos.")]
         public string? CC { get; set; }
 
         public DateTime InscriptionDate { get; set; } = DateTime.UtcNow;
@@ -97,11 +107,9 @@ namespace GymTastic.Models.Models
 
         [Required(ErrorMessage = "O preenchimento do Número de Telemóvel é obrigatório")]
         [DisplayName("Telemóvel")]
+        [StringLength(9, ErrorMessage = "O Telemóvel deve ter 9 dígitos.")]
+        [RegularExpression(@"^\d{9}$", ErrorMessage = "O Telemóvel deve conter apenas 9 dígitos.")]
         public string PhoneNumber { get; set; }
-
-        [DisplayName("Fotografia (280px x 320px)")]
-        [StringLength(256)]
-        public string? PhotoUrl { get; set; }
 
         // Dados de Morada
 
@@ -112,7 +120,8 @@ namespace GymTastic.Models.Models
 
         [Required(ErrorMessage = "O preenchimento do Código Postal é obrigatório")]
         [DisplayName("Código Postal")]
-        [StringLength(8)]
+        [StringLength(8, ErrorMessage = "O Código Postal deve ter 8 dígitos no formato 0000-000.")]
+        [RegularExpression(@"^\d{4}-\d{3}$", ErrorMessage = "O Código Postal deve estar no formato 0000-000.")]
         public string ZipCode { get; set; }
 
         [Required(ErrorMessage = "O preenchimento da Localidade é obrigatório")]
@@ -129,10 +138,12 @@ namespace GymTastic.Models.Models
 
         [Required(ErrorMessage = "O preenchimento do Número de Telemóvel do Contacto de Emergência é obrigatório")]
         [DisplayName("Telemóvel do Contacto de Emergência")]
-        [StringLength(13)]
+        [StringLength(9, ErrorMessage = "O Telemóvel do Contacto de Emergência deve ter 9 dígitos.")]
+        [RegularExpression(@"^\d{9}$", ErrorMessage = "O Telemóvel do Contacto de Emergência deve conter apenas 9 dígitos.")]
         public string EmergencyPhone { get; set; }
 
         [DisplayName("E-mail de Emergência")]
+        [EmailAddress(ErrorMessage = "O Email introduzido não é válido")]   
         [StringLength(320)]
         public string? EmergencyEmail { get; set; }
 
@@ -140,10 +151,12 @@ namespace GymTastic.Models.Models
 
         [DisplayName("Altura (M) ex: 1.77")]
         [DisplayFormat(DataFormatString = "{0:0.00}")]
+        [Range(1, 3, ErrorMessage = "A altura deve estar entre 1 e 3 metros.")]
         public float Height { get; set; }
 
         [DisplayName("Peso (Kg) ex: 77.2")]
         [DisplayFormat(DataFormatString = "{0:0.000}")]
+        [Range(1, 500, ErrorMessage = "O peso deve estar entre 1 e 500 kg.")]
         public float Weight { get; set; }
     }
 }

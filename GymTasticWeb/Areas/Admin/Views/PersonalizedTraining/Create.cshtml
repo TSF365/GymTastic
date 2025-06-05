@@ -21,11 +21,13 @@
                 </div>
                 <div class="mb-3 row p-1">
                     <div class="col-4 mt-4">
+                        <label>Treinadores</label>
                         <select asp-for="PersonalizedTraining.TrainerId" asp-items="@Model.TrainerList" class="form-control">
                             <option value="" disabled selected>-- Selecionar Opção --</option>
                         </select>
                     </div>
                     <div class="col-4 mt-4">
+                        <label>Atletas</label>
                         <select asp-for="PersonalizedTraining.AtleteId" asp-items="@Model.AtleteList" class="form-control">
                             <option value="" disabled selected>-- Selecionar Opção --</option>
                         </select>

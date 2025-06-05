@@ -161,7 +161,7 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                                                      trainerid = u.TrainerId,
                                                      email = u.Trainer.Email,
                                                      trainer = u.Trainer.FullName,
-                                                     speciality = u.Trainer.Specialty,
+                                                     //speciality = u.Trainer.Specialty,
                                                  })
                                                  .ToList();
             return Json(new { data = trainingList });

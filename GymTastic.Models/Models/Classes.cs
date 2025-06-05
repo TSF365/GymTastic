@@ -19,14 +19,26 @@ namespace GymTastic.Models.Models
         public string ClassName { get; set; }
         [Required(ErrorMessage = "O Horário da Aula é obrigatorio.")]
         [DisplayName("Tempo da Aula")]
-        public DateTime ClassTime { get; set; }
+        public DateTime ClassTime { get; set; } = DateTime.Now;
+
         [Required(ErrorMessage = "O Treinador da Aula é obrigatorio.")]
         [DisplayName("Treinador")]
         public int? TrainerId { get; set; }
         [ValidateNever]
         public Trainer Trainer { get; set; }
+
+        [Required(ErrorMessage = "O tipo de aula é obrigatorio.")]
+        [DisplayName("Tipo de Aula")]
+        public int? SpecialityId { get; set; }
+        [ValidateNever]
+
+        public Speciality Speciality { get; set; }
+
+        [DisplayName("Atletas Inscritos")]
+        public int RegAtletes { get; set; } = 0; //Atletas Inscritos
         [Required(ErrorMessage = "O número de atletas permitidos é obrigatorio.")]
         [DisplayName("Máximo de Atletas")]
         public int MaxAtletes { get; set; }
+
     }
 }

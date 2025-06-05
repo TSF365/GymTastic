@@ -38,11 +38,18 @@ namespace GymTasticWeb.Areas.Identity.Pages.Account
 
         public void OnGet()
         {
-            Input = new RegisterTrainerViewModel();
+            Input = new RegisterTrainerViewModel
+            {
+                SpecialityList = _unitOfWork.Speciality.GetAll()
+                    .Select(s => new SelectListItem { Text = s.Name, Value = s.Id.ToString() })
+            };
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            Input.SpecialityList = _unitOfWork.Speciality.GetAll()
+                .Select(s => new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -66,8 +73,19 @@ namespace GymTasticWeb.Areas.Identity.Pages.Account
                 await _userManager.AddToRoleAsync(user, "Trainer");
 
                 Input.Trainer.UserId = user.Id;
-
                 _unitOfWork.Trainer.Add(Input.Trainer);
+                _unitOfWork.Save();
+
+                // Add trainer-speciality relationships
+                foreach (var specId in Input.SelectedSpecialityIds)
+                {
+                    var trainerSpeciality = new TrainerSpeciality
+                    {
+                        Id_Trainer = Input.Trainer.Id,
+                        Id_Speciality = specId
+                    };
+                    _unitOfWork.TrainerSpeciality.Add(trainerSpeciality);
+                }
                 _unitOfWork.Save();
 
                 return RedirectToPage("/Index");
@@ -77,6 +95,6 @@ namespace GymTasticWeb.Areas.Identity.Pages.Account
                 ModelState.AddModelError(string.Empty, error.Description);
 
             return Page();
-        }
+                                                                            }
     }
 }

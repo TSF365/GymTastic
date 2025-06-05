@@ -58,7 +58,6 @@ namespace GymTasticWeb.Areas.Identity.Pages.Account
                 });
                 return Page();
             }
-
             var user = new IdentityUser
             {
                 UserName = Input.Email,

@@ -21,11 +21,6 @@ namespace GymTastic.Models.Models
         [Display(Name = "Nome Completo")]
         public string FullName { get; set; }
 
-        [Required(ErrorMessage = "O preenchimento da Especialidade é obrigatório")]
-        [StringLength(60, ErrorMessage = "A Especialidade não pode ter mais de 60 caracteres")]
-        [Display(Name = "Especialidade")]
-        public string Specialty { get; set; }
-
         public string? UserId { get; set; }
 
         [ForeignKey("UserId")]

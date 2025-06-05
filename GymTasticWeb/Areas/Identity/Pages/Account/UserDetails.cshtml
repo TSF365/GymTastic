@@ -1,0 +1,43 @@
+﻿@page "{id}"
+@model UserDetailsModel
+
+@if (User.IsInRole("Admin"))
+{
+    ViewData["Title"] = "Detalhes do Utilizador";
+
+    <h2>Detalhes do Utilizador</h2>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p class="mb-0">@error.ErrorMessage</p>
+            }
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+        </div>
+    }
+
+    <p><strong>Email:</strong> @Model.UserDetail.Email</p>
+    <p><strong>Nome de Utilizador:</strong> @Model.UserDetail.UserName</p>
+    <p>
+        <strong>Status:</strong>
+        <span class="@(Model.IsLockedOut ? "text-danger" : "text-success")">
+            @(Model.IsLockedOut ? "Desativado" : "Ativo")
+        </span>
+    </p>
+    <div class="row col-4 mt-2">
+        <form method="post" asp-page-handler="ToggleLock">
+            <input type="hidden" name="id" value="@Model.UserDetail.Id" />
+            <button type="submit" class="btn @(Model.IsLockedOut ? "btn-success" : "btn-danger")">
+                @(Model.IsLockedOut ? "Ativar Utilizador" : "Desativar Utilizador")
+            </button>
+        </form>
+    </div>
+
+    <div class="row col-4 mt-2">
+        <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Users">
+            <i class="bi bi-arrow-left-circle"></i> Voltar à Lista
+        </a>
+    </div>
+}

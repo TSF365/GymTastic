@@ -26,6 +26,9 @@ namespace GymTastic.DataAccess.Data
         public DbSet<Gender> Genders { get; set; }
         public DbSet<PersonalizedTraining> PersonalizedTraining { get; set; }
         public DbSet<Trainer> Trainers { get; set; }
+        public DbSet<Speciality> Specialities { get; set; }
+        public DbSet<TrainerSpeciality> TrainerSpecialities { get; set; }
+        public DbSet<ClassRegistration> ClassRegistrations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -38,6 +41,10 @@ namespace GymTastic.DataAccess.Data
             builder.Entity<Gender>().HasData(
                 new Gender { Id = 1, GenderDescription = "Feminino" },
                 new Gender { Id = 2, GenderDescription = "Masculino" }
+                );
+            builder.Entity<Speciality>().HasData(
+                new Speciality { Id = 1, Name = "Yoga" },
+                new Speciality { Id = 2, Name = "Pilates"}
                 );
 
             //builder.Entity<Atlete>().HasData(

@@ -1,64 +1,21 @@
 ﻿@model Trainer
+
 @if (User.IsInRole("Trainer"))
 {
     <div class="container">
-
-        @* Dummy *@
-        @* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-        Registos Médicos
-    </button>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-        Registos Desportivos
-    </button> *@@* 
-    <button type="button" class="btn btn-primary">
-        <a asp-controller="File" asp-action="Create" asp-route-id="@Model.Atlete.Id" class="btn btn-primary">
-            <i class="bi bi-paperclip"></i> Adicionar Anexo
-        </a>
-    </button> *@
-
-        <!-- The Modal -->
-        <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Modal Heading</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        @* END Dummy*@
-
         <form method="post" class="row" enctype="multipart/form-data">
             <input asp-for="Id" hidden />
-
             <div asp-validation-summary="All" class="text-danger"></div>
-
-            @* ------ Main Registo do Atleta ------ *@
 
             <div class="border p-3 mt-4">
 
-                @* ------ HEADER ------ *@
-
+                <!-- Header -->
                 <div class="row pb-2">
                     <h2 class="text-primary">Atualizar Treinador</h2>
                     <hr />
                 </div>
 
-                @* ------ Nome Apelido e Foto ------ *@
+                <!-- Nome Completo -->
                 <div class="row">
                     <div class="col-10">
                         <div class="mb-3 row p-1">
@@ -69,14 +26,11 @@
                     </div>
                 </div>
 
-                @* ------ TAB LIST HEADER ------ *@
-
+                <!-- Tab Navigation -->
                 <ul class="nav nav-tabs mt-0 p-0" role="tablist">
-
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" data-bs-toggle="tab" href="#personalinfo" aria-selected="false" role="tab">Informação Pessoal</a>
                     </li>
-
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" data-bs-toggle="tab" href="#trainerinfo" aria-selected="false" role="tab">Informação Treinador</a>
                     </li>
@@ -84,20 +38,36 @@
 
                 <div id="myTabContent" class="tab-content mt-1 p-0">
 
-                    @* ************************ Informação Treinador ****************** *@
-
+                    <!-- Trainer Info Tab -->
                     <div class="tab-pane fade" id="trainerinfo" role="tabpanel">
                         <div class="border p-3 pt-3">
+
+                            <!-- Especialidades (read-only) -->
                             <div class="mb-3 row p-1">
-                                <label asp-for="Specialty" class="p-0"></label>
-                                <input asp-for="Specialty" class="form-control" />
-                                <span asp-validation-for="Specialty" class="text-danger"></span>
+                                <label class="p-0 fw-bold">Especialidades</label>
+                                <ul class="form-control" style="list-style: none; padding-left: 0;">
+                                    @if (ViewBag.Specialities != null && ViewBag.Specialities.Count > 0)
+                                    {
+                                        foreach (var speciality in ViewBag.Specialities)
+                                        {
+                                            <li>@speciality</li>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <li class="text-muted">Nenhuma especialidade atribuída.</li>
+                                    }
+                                </ul>
                             </div>
+
+                            <!-- TPTD -->
                             <div class="mb-3 row p-1">
                                 <label asp-for="TPTD" class="p-0"></label>
                                 <input asp-for="TPTD" class="form-control" />
                                 <span asp-validation-for="TPTD" class="text-danger"></span>
                             </div>
+
+                            <!-- TPTD Date -->
                             <div class="mb-3 row p-1">
                                 <label asp-for="TptdDate" class="p-0"></label>
                                 <input asp-for="TptdDate" type="date" class="form-control" />
@@ -106,8 +76,7 @@
                         </div>
                     </div>
 
-                    @* ************************ Informação Pessoal ****************** *@
-
+                    <!-- Personal Info Tab -->
                     <div class="tab-pane fade" id="personalinfo" role="tabpanel">
                         <div class="border p-3 pt-3">
                             <div class="row">
@@ -125,19 +94,19 @@
                         </div>
                     </div>
 
-                    @* ********************* Botões Save e Cancel **************************** *@
-
+                    <!-- Buttons -->
                     <div class="row p-2">
                         <div class="col-6 col-md-3 p-1">
                             <button type="submit" class="btn btn-primary form-control">Guardar</button>
                         </div>
                         <div class="col-6 col-md-3 p-1">
-                            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary form-control">
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary form-control">
                                 Voltar
                             </a>
                         </div>
                     </div>
                 </div>
+            </div>
         </form>
     </div>
 }

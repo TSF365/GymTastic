@@ -44,7 +44,6 @@
 
         <form method="post" class="row" enctype="multipart/form-data">
             <input asp-for="Atlete.Id" hidden />
-            <input asp-for="Atlete.PhotoUrl" hidden />
 
             <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -74,15 +73,6 @@
                             <span asp-validation-for="Atlete.LastName" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-2 border-1 mt-4 text-end">
-                        <img @* src="https://caco.osaekomi.pt/atletes/@Model.Atlete.PhotoUrl" *@ width="75%" style="border-radius:5px; border:1px solid #bbb9b9" />
-                    </div>
-                </div>
-
-                <div class="mb-3 row p-1">
-                    <label asp-for="Atlete.PhotoUrl" class="p-0"></label>
-                    <input asp-for="Atlete.PhotoUrl" type="file" name="file" class="form-control" />
-                    <span asp-validation-for="Atlete.PhotoUrl" class="text-danger"></span>
                 </div>
 
                 @* ------ TAB LIST HEADER ------ *@

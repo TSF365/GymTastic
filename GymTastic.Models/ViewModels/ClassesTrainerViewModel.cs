@@ -13,6 +13,9 @@ namespace GymTastic.Models.ViewModels
     {
         public Classes Classes { get; set; }
         [ValidateNever]
-        public IEnumerable<SelectListItem> TrainerList { get; set; } 
+        public IEnumerable<SelectListItem> TrainerList { get; set; }
+        
+        [ValidateNever]
+        public IEnumerable<SelectListItem> SpecialityList { get; set; }
     }
 }
