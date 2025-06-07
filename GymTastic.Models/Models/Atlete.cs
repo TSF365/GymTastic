@@ -53,7 +53,7 @@ namespace GymTastic.Models.Models
         [Required(ErrorMessage = "O preenchimento da Data de Nascimento é obrigatório")]
         [Display(Name = "Data de Nascimento")]
         [BirthDateValidation]
-        public DateTime BirthDate { get; set; } 
+        public DateTime BirthDate { get; set; } = DateTime.Now;
 
         [DisplayName("Idade")]
         public int Age
@@ -92,6 +92,7 @@ namespace GymTastic.Models.Models
         [DisplayName("Cartão de Cidadão")]
         [StringLength(8, ErrorMessage = "O Cartão de Cidadão deve ter 8 dígitos.")]
         [RegularExpression(@"^\d{8}$", ErrorMessage = "O Cartão de Cidadão deve conter apenas 8 dígitos.")]
+        [MaxLength(8)]
         public string? CC { get; set; }
 
         public DateTime InscriptionDate { get; set; } = DateTime.UtcNow;
@@ -150,9 +151,10 @@ namespace GymTastic.Models.Models
         // Dados de Saúde
 
         [DisplayName("Altura (M) ex: 1.77")]
-        [DisplayFormat(DataFormatString = "{0:0.00}")]
+        [DisplayFormat(DataFormatString = "{0:F2}", ApplyFormatInEditMode = true)]
         [Range(1, 3, ErrorMessage = "A altura deve estar entre 1 e 3 metros.")]
         public float Height { get; set; }
+
 
         [DisplayName("Peso (Kg) ex: 77.2")]
         [DisplayFormat(DataFormatString = "{0:0.000}")]

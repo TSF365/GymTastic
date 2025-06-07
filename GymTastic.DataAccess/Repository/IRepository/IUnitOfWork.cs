@@ -19,6 +19,8 @@ namespace GymTastic.DataAccess.Repository.IRepository
         ISpecialityRepository Speciality { get; }
         ITrainerSpecialityRepository TrainerSpeciality { get; }
         IClassRegistrationRepository ClassRegistration { get; }
+        IPreferenceRepository Preference { get; }
+        IAtletePreferenceRepository AtletePreference { get; }
 
         void Save();
     }

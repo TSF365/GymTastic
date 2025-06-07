@@ -14,14 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 //LIGAR PARA TESTES NA REDE LOCAL
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(5000); // HTTP
-    options.ListenAnyIP(5001, listenOptions =>
-    {
-        listenOptions.UseHttps(); // HTTPS, se desejar
-    });
-});
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.ListenAnyIP(5000); // HTTP
+//    options.ListenAnyIP(5001, listenOptions =>
+//    {
+//        listenOptions.UseHttps(); // HTTPS, se desejar
+//    });
+//});
 
 builder.Services.AddControllersWithViews();
 
@@ -51,7 +51,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = false;
     options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequiredLength = 6;
+    options.Password.RequiredLength = 1;
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = false;
 });

@@ -4,7 +4,20 @@
         "ajax": { url: '/trainer/classes/getall' },
         "columns": [
             { data: 'classname', "width": "8%" },
-            { data: 'classtime', "width": "10%" },
+            {
+                data: 'classtime',
+                "width": "10%",
+                "render": function (data) {
+                    if (!data) return "";
+                    var date = new Date(data);
+                    var day = String(date.getDate()).padStart(2, '0');
+                    var month = String(date.getMonth() + 1).padStart(2, '0'); // Janeiro = 0
+                    var year = date.getFullYear();
+                    var hours = String(date.getHours()).padStart(2, '0');
+                    var minutes = String(date.getMinutes()).padStart(2, '0');
+                    return `${day}/${month}/${year} ${hours}:${minutes}`;
+                }
+            },
             { data: 'email', "width": "8%" },
             { data: 'speciality', "width": "3%" },
             { data: 'maxatletes', "width": "10%" },

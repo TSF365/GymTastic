@@ -35,7 +35,9 @@ namespace GymTastic.Models.Models
         public Speciality Speciality { get; set; }
 
         [DisplayName("Atletas Inscritos")]
-        public int RegAtletes { get; set; } = 0; //Atletas Inscritos
+        //[DefaultValue(0)]
+        [Range(0, int.MaxValue)]
+        public int RegAtletes { get; set; }  //Atletas Inscritos
         [Required(ErrorMessage = "O número de atletas permitidos é obrigatorio.")]
         [DisplayName("Máximo de Atletas")]
         public int MaxAtletes { get; set; }

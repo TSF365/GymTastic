@@ -2,9 +2,11 @@
 using GymTastic.Models.Models;
 using GymTastic.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace GymTasticWeb.Areas.Trainer.Controllers
 {
@@ -100,14 +102,43 @@ namespace GymTasticWeb.Areas.Trainer.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Classes.Update(classesTrainerViewModel.Classes);
+                // Buscar a aula original no banco de dados
+                var originalClass = _unitOfWork.Classes.Get(c => c.Id == classesTrainerViewModel.Classes.Id);
+                if (originalClass == null)
+                {
+                    return NotFound();
+                }
+
+                // Atualizar apenas os campos permitidos (NÃO alterar RegAtletes)
+                originalClass.ClassName = classesTrainerViewModel.Classes.ClassName;
+                originalClass.ClassTime = classesTrainerViewModel.Classes.ClassTime;
+                originalClass.TrainerId = classesTrainerViewModel.Classes.TrainerId;
+                originalClass.SpecialityId = classesTrainerViewModel.Classes.SpecialityId;
+                originalClass.MaxAtletes = classesTrainerViewModel.Classes.MaxAtletes;
+
+                // RegAtletes permanece intacto
+
+                _unitOfWork.Classes.Update(originalClass);
                 _unitOfWork.Save();
                 TempData["success"] = "Aula atualizada com sucesso.";
 
                 return RedirectToAction("Index", "Classes");
-
             }
-            return View();
+
+            // Recarregar listas se ModelState for inválido
+            classesTrainerViewModel.TrainerList = _unitOfWork.Trainer.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.FullName,
+                Value = u.Id.ToString()
+            });
+
+            classesTrainerViewModel.SpecialityList = _unitOfWork.Speciality.GetAll().Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
+            });
+
+            return View(classesTrainerViewModel);
         }
 
         public IActionResult Delete(int? id)
@@ -141,11 +172,44 @@ namespace GymTasticWeb.Areas.Trainer.Controllers
 
         #region AJAX API CALLS
 
+        //[HttpGet]
+        //public IActionResult GetAll()
+        //{
+        //    var classesList = _unitOfWork.Classes.GetAll(includeProperties: "Trainer").ToList();
+        //    var specialities = _unitOfWork.Speciality.GetAll().ToList();
+
+        //    var result = classesList.Select(cls => new
+        //    {
+        //        id = cls.Id,
+        //        classname = cls.ClassName,
+        //        classtime = cls.ClassTime,
+        //        trainerid = cls.TrainerId,
+        //        email = cls.Trainer?.Email,
+        //        maxatletes = cls.MaxAtletes,
+        //        regatletes = cls.RegAtletes,
+        //        // Novo campo: especialidades do treinador
+        //        speciality = cls.Speciality != null ? cls.Speciality.Name : "N/A"
+        //    });
+
+        //    return Json(new { data = result });
+        //}
+
         [HttpGet]
         public IActionResult GetAll()
         {
-            var classesList = _unitOfWork.Classes.GetAll(includeProperties: "Trainer").ToList();
-            var specialities = _unitOfWork.Speciality.GetAll().ToList();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // ou User.Identity.Name
+
+            var trainer = _unitOfWork.Trainer.Get(t => t.UserId == userId);
+            if (trainer == null)
+            {
+                return Unauthorized();
+            }
+
+            // Obter todas as aulas com Trainer e Speciality
+            var classesList = _unitOfWork.Classes
+                .GetAll("Trainer,Speciality")
+                .Where(c => c.TrainerId == trainer.Id) // filtrar na memória
+                .ToList();
 
             var result = classesList.Select(cls => new
             {
@@ -156,12 +220,13 @@ namespace GymTasticWeb.Areas.Trainer.Controllers
                 email = cls.Trainer?.Email,
                 maxatletes = cls.MaxAtletes,
                 regatletes = cls.RegAtletes,
-                // Novo campo: especialidades do treinador
                 speciality = cls.Speciality != null ? cls.Speciality.Name : "N/A"
             });
 
             return Json(new { data = result });
         }
+
+
 
         [HttpGet]
         public IActionResult Get(int? id)

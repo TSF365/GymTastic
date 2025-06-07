@@ -45,7 +45,6 @@
         <form method="post" class="row" enctype="multipart/form-data">
             <input asp-for="Atlete.Id" hidden />
 
-            <div asp-validation-summary="All" class="text-danger"></div>
 
             @* ------ Main Registo do Atleta ------ *@
 
@@ -207,6 +206,11 @@
                                     <input asp-for="Atlete.Weight" class="form-control" />
                                     <span asp-validation-for="Atlete.Weight" class="text-danger"></span>
                                 </div>
+                                <!-- Novo campo: Preferência -->
+                                <div class="mb-3 col-4 p-1">
+                                    <label asp-for="SelectedPreferenceIds" class="p-0"></label>
+                                    <select asp-for="SelectedPreferenceIds" asp-items="Model.PreferenceList" class="form-control" multiple></select>
+                                </div>
                                 <div class="mb-3 col-4 p-1">
                                     <label asp-for="Atlete.Age" class="p-0"></label>
                                     <input disabled asp-for="Atlete.Age" class="form-control" />
@@ -217,7 +221,6 @@
                     </div>
 
                     @* *********************  Anexos  ****************** *@
-
                     <div class="tab-pane fade" id="attachments" role="tabpanel">
                         <div class="row pt-4 pb-3">
                             <div class="col-6">
@@ -236,7 +239,10 @@
                                         <th></th>
                                     </tr>
                                 </thead>
+                                
                                 <tbody>
+                                    @* @if (Model.AttachmentList != null && Model.AttachmentList.Any())
+                                    { *@
                                     @foreach (var attach in Model.AttachmentList.OrderByDescending(o => o.CreatedDate))
                                     {
                                         <tr class="text-primary">
@@ -258,7 +264,7 @@
                                             </td>
                                         </tr>
                                     }
-
+                                    @* } *@
                                 </tbody>
                             </table>
                         </div>

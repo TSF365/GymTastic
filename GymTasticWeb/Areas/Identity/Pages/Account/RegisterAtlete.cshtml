@@ -76,6 +76,12 @@
                         <label asp-for="Input.Atlete.Weight"></label>
                         <span asp-validation-for="Input.Atlete.Weight" class="text-danger"></span>
                     </div>
+                    <div class="form-group mb-3">
+						<label asp-for="Input.SelectedPreferences" class="text-secondary"></label>
+                        <select asp-for="Input.SelectedPreferences" asp-items="Model.Input.PreferencesList" class="form-select" multiple>
+                        </select>
+                        <span asp-validation-for="Input.SelectedPreferences" class="text-danger"></span>
+                    </div>
 
                     <div class="form-floating mb-3 col-md-6">
                         <input asp-for="Input.Atlete.FIN" class="form-control" />

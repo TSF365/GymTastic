@@ -29,6 +29,8 @@ namespace GymTastic.DataAccess.Data
         public DbSet<Speciality> Specialities { get; set; }
         public DbSet<TrainerSpeciality> TrainerSpecialities { get; set; }
         public DbSet<ClassRegistration> ClassRegistrations { get; set; }
+        public DbSet<Preferences> Preferences { get; set; }
+        public DbSet<AtletePreferences> AtletePreferences { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -45,6 +47,10 @@ namespace GymTastic.DataAccess.Data
             builder.Entity<Speciality>().HasData(
                 new Speciality { Id = 1, Name = "Yoga" },
                 new Speciality { Id = 2, Name = "Pilates"}
+                );
+            builder.Entity<Preferences>().HasData(
+                new Preferences { Id = 1, Name = "Yoga" },
+                new Preferences { Id = 2, Name = "Pilates" }
                 );
 
             //builder.Entity<Atlete>().HasData(

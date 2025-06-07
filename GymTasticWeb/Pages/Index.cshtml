@@ -4,10 +4,52 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Página Inicial";
 }
-
-<div class="text-center">
-    <h1 class="display-4 fw-bold">Welcome</h1>
-    <h1 class="display-4 text-success">@UserManager.GetUserName(User)</h1>
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-4 shadow" role="alert" style="z-index: 1050;">
+        @TempData["error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+}
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-4 shadow" role="alert" style="z-index: 1050;">
+        @TempData["success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+}
+<div class="text-center mt-5">
+    <h1 class="display-4 fw-bold">Bem-Vindo</h1>
+    <h1 class="display-5 text-success">@UserManager.GetUserName(User)</h1>
 </div>
+
+@if (User.IsInRole("Atlete"))
+{
+    <hr class="my-5" />
+
+    <div class="container">
+        <h2 class="text-primary mb-4">Aulas Sugeridas</h2>
+
+        <div class="table-responsive">
+            <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Nome da Aula</th>
+                        <th>Dia</th>
+                        <th>Email</th>
+                        <th>Especialidade</th>
+                        <th>Máximo Atletas</th>
+                        <th>Atletas Inscritos</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script src="~/js/classesuggestions.js"></script>
+    }
+}

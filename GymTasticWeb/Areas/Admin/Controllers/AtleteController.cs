@@ -35,6 +35,11 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                 Text = u.GenderDescription,
                 Value = u.Id.ToString()
             });
+            atleteViewModel.PreferenceList = _unitOfWork.Preference.GetAll().Select(p => new SelectListItem
+            {
+                Text = p.Name,
+                Value = p.Id.ToString()
+            });
 
             return View(atleteViewModel);
         }
@@ -46,6 +51,19 @@ namespace GymTasticWeb.Areas.Admin.Controllers
             {
                 _unitOfWork.Atlete.Add(atleteViewModel.Atlete);
                 _unitOfWork.Save();
+                
+                //save preferences
+                foreach (var prefId in atleteViewModel.SelectedPreferenceIds)
+                {
+                    var atletePref = new AtletePreferences
+                    {
+                        Id_Atlete = atleteViewModel.Atlete.Id,
+                        Id_Preference = prefId
+                    };
+                    _unitOfWork.AtletePreference.Add(atletePref);
+                }
+                _unitOfWork.Save();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(atleteViewModel);
@@ -81,23 +99,78 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                 // Selected = u.Id 
             });
 
+            var selectedPrefs = _unitOfWork.AtletePreference
+            .GetAll()
+            .Where(ap => ap.Id_Atlete == id)
+            .Select(ap => ap.Id_Preference)
+            .ToList();
+
+
+            atleteViewModel.SelectedPreferenceIds = selectedPrefs;
+
+            atleteViewModel.PreferenceList = _unitOfWork.Preference.GetAll().Select(p => new SelectListItem
+            {
+                Text = p.Name,
+                Value = p.Id.ToString()
+            });
+
             return View(atleteViewModel);
         }
 
         [HttpPost]
         public IActionResult Edit(AtleteViewModel atleteViewModel, IFormFile? file)
         {
-            string oldFileNameWithPath = string.Empty;
+            //string oldFileNameWithPath = string.Empty;
             if (ModelState.IsValid)
             {
+                // Update main athlete data
                 _unitOfWork.Atlete.Update(atleteViewModel.Atlete);
                 _unitOfWork.Save();
-                TempData["success"] = "Atleta atualizado com sucesso.";
+
+                // Remove existing preferences
+                var existing = _unitOfWork.AtletePreference
+                .GetAll()
+                .Where(p => p.Id_Atlete == atleteViewModel.Atlete.Id);
+
+                foreach (var item in existing)
+                {
+                    _unitOfWork.AtletePreference.Remove(item);
+                }
+
+
+                // Add updated preferences
+                foreach (var prefId in atleteViewModel.SelectedPreferenceIds)
+                {
+                    var atletePref = new AtletePreferences
+                    {
+                        Id_Atlete = atleteViewModel.Atlete.Id,
+                        Id_Preference = prefId
+                    };
+                    _unitOfWork.AtletePreference.Add(atletePref);
+                }
+
+                _unitOfWork.Save();
+
 
                 return RedirectToAction("Index", "Atlete");
 
             }
-            return View();
+            atleteViewModel.GenderList = _unitOfWork.Gender.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.GenderDescription,
+                Value = u.Id.ToString()
+            });
+
+            atleteViewModel.AttachmentList = _unitOfWork.Attachment.GetAll()
+                .Where(u => u.AtleteId == atleteViewModel.Atlete.Id)
+                .ToList();
+
+            atleteViewModel.FileClassificationTypeList = _unitOfWork.FileClassificationType.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Description,
+                Value = u.Id.ToString()
+            });
+            return View(atleteViewModel);
 
         }
 
@@ -130,6 +203,82 @@ namespace GymTasticWeb.Areas.Admin.Controllers
 
         }
 
+        public IActionResult Preferences()
+        {
+            var allPreferences = _unitOfWork.Preference.GetAll().ToList();
+            return View(allPreferences);
+        }
+
+        public IActionResult CreatePreference()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreatePreference(Preferences preferences)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Preference.Add(preferences);
+                _unitOfWork.Save();
+                TempData["success"] = "Preferência criada com sucesso.";
+                return RedirectToAction("Preferences");
+            }
+            return View(preferences);
+        }
+
+        public IActionResult EditPreference(int? id)
+        {
+            if (id == null || id == 0)
+                return NotFound();
+
+            var preference = _unitOfWork.Preference.Get(u => u.Id == id);
+            if (preference == null)
+                return NotFound();
+
+            return View(preference);
+        }
+
+        [HttpPost]
+        public IActionResult EditPreference(Preferences preferences)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Preference.Update(preferences);
+                _unitOfWork.Save();
+                TempData["success"] = "Preferência atualizada com sucesso.";
+                return RedirectToAction("Preferences");
+            }
+
+            return View(preferences);
+        }
+
+        public IActionResult DeletePreference(int? id)
+        {
+            if (id == null || id == 0)
+                return NotFound();
+
+            var preference = _unitOfWork.Preference.Get(u => u.Id == id);
+            if (preference == null)
+                return NotFound();
+
+            return View(preference);
+        }
+
+        [HttpPost, ActionName("DeletePreference")]
+        public IActionResult DeletePreferencePost(int? id)
+        {
+            var preference = _unitOfWork.Preference.Get(u => u.Id == id);
+            if (preference == null)
+                return NotFound();
+
+            _unitOfWork.Preference.Remove(preference);
+            _unitOfWork.Save();
+            TempData["success"] = "Preferência eliminada com sucesso.";
+            return RedirectToAction("Preferences");
+        }
+
+
         #region AJAX API CALLS
 
         [HttpGet]
@@ -156,6 +305,20 @@ namespace GymTasticWeb.Areas.Admin.Controllers
 
             return View(atlete);
         }
+
+        [HttpGet]
+        public IActionResult GetAllPreferences()
+        {
+            var preferences = _unitOfWork.Preference.GetAll()
+                .Select(p => new
+                {
+                    id = p.Id,
+                    name = p.Name
+                }).ToList();
+
+            return Json(new { data = preferences });
+        }
+
 
         #endregion
     }

@@ -27,5 +27,12 @@ namespace GymTasticWeb.ViewModels
         [BindNever]
         [ValidateNever]
         public IEnumerable<SelectListItem> Genders { get; set; }
+        
+        [BindNever]
+        [ValidateNever]
+        public IEnumerable<SelectListItem> PreferencesList { get; set; }
+        [Display(Name = "Preferências")]
+        public List<int> SelectedPreferences { get; set; }
+
     }
 }

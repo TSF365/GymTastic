@@ -100,16 +100,45 @@ namespace GymTasticWeb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Classes.Update(classesTrainerViewModel.Classes);
+                // Buscar a aula original no banco de dados
+                var originalClass = _unitOfWork.Classes.Get(c => c.Id == classesTrainerViewModel.Classes.Id);
+                if (originalClass == null)
+                {
+                    return NotFound();
+                }
+
+                // Atualizar apenas os campos permitidos (NÃO alterar RegAtletes)
+                originalClass.ClassName = classesTrainerViewModel.Classes.ClassName;
+                originalClass.ClassTime = classesTrainerViewModel.Classes.ClassTime;
+                originalClass.TrainerId = classesTrainerViewModel.Classes.TrainerId;
+                originalClass.SpecialityId = classesTrainerViewModel.Classes.SpecialityId;
+                originalClass.MaxAtletes = classesTrainerViewModel.Classes.MaxAtletes;
+
+                // RegAtletes permanece intacto
+
+                _unitOfWork.Classes.Update(originalClass);
                 _unitOfWork.Save();
                 TempData["success"] = "Aula atualizada com sucesso.";
 
                 return RedirectToAction("Index", "Classes");
-
             }
 
-            return View();
+            // Recarregar listas se ModelState for inválido
+            classesTrainerViewModel.TrainerList = _unitOfWork.Trainer.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.FullName,
+                Value = u.Id.ToString()
+            });
+
+            classesTrainerViewModel.SpecialityList = _unitOfWork.Speciality.GetAll().Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
+            });
+
+            return View(classesTrainerViewModel);
         }
+
 
         public IActionResult Delete(int? id)
         {

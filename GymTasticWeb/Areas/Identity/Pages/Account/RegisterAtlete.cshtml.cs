@@ -43,7 +43,12 @@ namespace GymTasticWeb.Areas.Identity.Pages.Account
                 {
                     Text = u.GenderDescription,
                     Value = u.Id.ToString()
-                })
+                }),
+                PreferencesList = _unitOfWork.Preference.GetAll().Select(p => new SelectListItem
+                {
+                    Text = p.Name,
+                    Value = p.Id.ToString()
+                }).ToList()
             };
         }
 
@@ -79,6 +84,17 @@ namespace GymTasticWeb.Areas.Identity.Pages.Account
 
                 _unitOfWork.Atlete.Add(Input.Atlete);
                 _unitOfWork.Save();
+                foreach (var preferenceId in Input.SelectedPreferences)
+                {
+                    var atletePreference = new AtletePreferences
+                    {
+                        Id_Atlete = Input.Atlete.Id, // Certifica-te que o Id do atleta está disponível após Save()
+                        Id_Preference = preferenceId
+                    };
+                    _unitOfWork.AtletePreference.Add(atletePreference);
+                }
+                _unitOfWork.Save();
+
 
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToPage("/Index");

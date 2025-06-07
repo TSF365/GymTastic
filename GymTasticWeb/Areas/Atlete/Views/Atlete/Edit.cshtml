@@ -45,7 +45,7 @@
         <form method="post" class="row" enctype="multipart/form-data">
             <input asp-for="Atlete.Id" hidden />
 
-            <div asp-validation-summary="All" class="text-danger"></div>
+            @* <div asp-validation-summary="All" class="text-danger"></div> *@
 
             @* ------ Main Registo do Atleta ------ *@
 
@@ -63,13 +63,13 @@
                     <div class="col-10">
                         <div class="mb-3 row p-1">
                             <label asp-for="Atlete.FirstName" class="p-0"></label>
-                            <input asp-for="Atlete.FirstName" class="form-control" size="32" disabled/>
+                            <input asp-for="Atlete.FirstName" class="form-control" size="32" readonly/>
                             <span asp-validation-for="Atlete.FirstName" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3 row p-1">
                             <label asp-for="Atlete.LastName" class="p-0"></label>
-                            <input asp-for="Atlete.LastName" class="form-control" disabled />
+                            <input asp-for="Atlete.LastName" class="form-control" readonly/>
                             <span asp-validation-for="Atlete.LastName" class="text-danger"></span>
                         </div>
                     </div>
@@ -147,25 +147,25 @@
                         <div class="border p-3 pt-3">
                             <div class="mb-3 row p-1">
                                 <label asp-for="Atlete.BirthDate" class="p-0"></label>
-                                <input asp-for="Atlete.BirthDate" type="date" class="form-control" disabled/>
+                                <input asp-for="Atlete.BirthDate" type="date" class="form-control" readonly/>
                                 <span asp-validation-for="Atlete.BirthDate" class="text-danger"></span>
                             </div>
 
                             <div class="row">
                                 <div class="mb-3 col-4 p-1">
                                     <label asp-for="Atlete.CC" class="p-0"></label>
-                                    <input asp-for="Atlete.CC" class="form-control" disabled />
+                                    <input asp-for="Atlete.CC" class="form-control" readonly />
                                     <span asp-validation-for="Atlete.CC" class="text-danger"></span>
                                 </div>
                                 <div class="mb-3 col-4 p-1">
                                     <label asp-for="Atlete.FIN" class="p-0"></label>
-                                    <input asp-for="Atlete.FIN" class="form-control" disabled />
+                                    <input asp-for="Atlete.FIN" class="form-control" readonly />
                                     <span asp-validation-for="Atlete.FIN" class="text-danger"></span>
                                 </div>
                                 <div class="mb-3 col-4 p-1">
                                     <label asp-for="Atlete.GenderId" class="p-0"></label>
-                                    <select asp-for="Atlete.GenderId" asp-items="@Model.GenderList" class="form-control" disabled>
-                                        <option disabled selected>-- Selecionar Opção --</option>
+                                    <select asp-for="Atlete.GenderId" asp-items="@Model.GenderList" class="form-control">
+                                        <option readonly selected>-- Selecionar Opção --</option>
                                     </select>
                                     <span asp-validation-for="Atlete.Gender" class="text-danger"></span>
                                 </div>
@@ -208,8 +208,12 @@
                                     <span asp-validation-for="Atlete.Weight" class="text-danger"></span>
                                 </div>
                                 <div class="mb-3 col-4 p-1">
+                                    <label asp-for="SelectedPreferenceIds" class="p-0"></label>
+                                    <select asp-for="SelectedPreferenceIds" asp-items="Model.PreferenceList" class="form-control" multiple></select>
+                                </div>
+                                <div class="mb-3 col-4 p-1">
                                     <label asp-for="Atlete.Age" class="p-0"></label>
-                                    <input disabled asp-for="Atlete.Age" class="form-control" />
+                                    <input readonly asp-for="Atlete.Age" class="form-control" />
                                     @* <span asp-validation-for="Atlete.Age" class="text-danger"></span> *@
                                 </div>
                             </div>
@@ -223,6 +227,7 @@
                             <div class="col-6">
                                 <h2 class="text-primary">Lista de Anexos</h2>
                             </div>
+                           
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr class="text-light">
@@ -237,28 +242,30 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var attach in Model.AttachmentList.OrderByDescending(o => o.CreatedDate))
-                                    {
-                                        <tr class="text-primary">
-                                            <td>@attach.CreatedDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                                            <td>@attach.Title </td>
-                                            <td>@attach.FileClassificationType.Description</td>
-                                            <td>
-                                                <div class="w-0 btn-group" role="group">
-                                                    <a asp-controller="File" asp-action="Download" asp-route-id="@attach.Id" class="btn btn-primary mx-1">
-                                                        <i class="bi bi-file-earmark-arrow-down"></i>
-                                                    </a>
-                                                    <a asp-controller="File" asp-action="Edit" asp-route-id="@attach.Id" class="btn btn-primary mx-1">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </a>
-                                                    @* <a asp-controller="File" asp-action="Delete" asp-route-id="@attach.Id" class="btn btn-danger mx-1">
-                                                        <i class="bi bi-trash"></i>
-                                                    </a> *@
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    }
-
+                                    @* @if (Model.AttachmentList != null && Model.AttachmentList.Any())
+                                    { *@
+                                        @foreach (var attach in Model.AttachmentList.OrderByDescending(o => o.CreatedDate))
+                                        {
+                                            <tr class="text-primary">
+                                                <td>@attach.CreatedDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                                <td>@attach.Title </td>
+                                                <td>@attach.FileClassificationType.Description</td>
+                                                <td>
+                                                    <div class="w-0 btn-group" role="group">
+                                                        <a asp-controller="File" asp-action="Download" asp-route-id="@attach.Id" class="btn btn-primary mx-1">
+                                                            <i class="bi bi-file-earmark-arrow-down"></i>
+                                                        </a>
+                                                        <a asp-controller="File" asp-action="Edit" asp-route-id="@attach.Id" class="btn btn-primary mx-1">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </a>
+                                                        @* <a asp-controller="File" asp-action="Delete" asp-route-id="@attach.Id" class="btn btn-danger mx-1">
+                                                            <i class="bi bi-trash"></i>
+                                                        </a> *@
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    @* } *@
                                 </tbody>
                             </table>
                         </div>

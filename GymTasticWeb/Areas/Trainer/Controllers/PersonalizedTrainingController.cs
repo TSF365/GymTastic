@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using GymTastic.Models.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace GymTasticWeb.Areas.Trainer.Controllers
 {
@@ -147,25 +148,58 @@ namespace GymTasticWeb.Areas.Trainer.Controllers
 
         #region AJAX API CALLS
 
+        //[HttpGet]
+        //public IActionResult GetAll()
+        //{
+        //    var trainingList = _unitOfWork.PersonalizedTraining.GetAll(includeProperties: "Trainer,Atlete")
+        //                                         .Select(u => new
+        //                                         {
+        //                                             id = u.Id,
+        //                                             trainingname = u.TrainingName,
+        //                                             atleteid = u.AtleteId,
+        //                                             atlete = u.Atlete.FullName,
+        //                                             trainingobjective = u.TrainingObjective,
+        //                                             trainerid = u.TrainerId,
+        //                                             email = u.Trainer.Email,
+        //                                             trainer = u.Trainer.FullName,
+        //                                             //speciality = u.Trainer.Specialty,
+        //                                         })
+        //                                         .ToList();
+        //    return Json(new { data = trainingList });
+        //}
+
         [HttpGet]
         public IActionResult GetAll()
         {
-            var trainingList = _unitOfWork.PersonalizedTraining.GetAll(includeProperties: "Trainer,Atlete")
-                                                 .Select(u => new
-                                                 {
-                                                     id = u.Id,
-                                                     trainingname = u.TrainingName,
-                                                     atleteid = u.AtleteId,
-                                                     atlete = u.Atlete.FullName,
-                                                     trainingobjective = u.TrainingObjective,
-                                                     trainerid = u.TrainerId,
-                                                     email = u.Trainer.Email,
-                                                     trainer = u.Trainer.FullName,
-                                                     //speciality = u.Trainer.Specialty,
-                                                 })
-                                                 .ToList();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // ID do utilizador autenticado
+
+            var trainer = _unitOfWork.Trainer.Get(t => t.UserId == userId);
+            if (trainer == null)
+            {
+                return Unauthorized();
+            }
+
+            // Obter todos os treinos personalizados do treinador atual
+            var trainingList = _unitOfWork.PersonalizedTraining
+                .GetAll("Trainer,Atlete")
+                .Where(t => t.TrainerId == trainer.Id) // filtrar na memória
+                .Select(u => new
+                {
+                    id = u.Id,
+                    trainingname = u.TrainingName,
+                    atleteid = u.AtleteId,
+                    atlete = u.Atlete.FullName,
+                    trainingobjective = u.TrainingObjective,
+                    trainerid = u.TrainerId,
+                    email = u.Trainer.Email,
+                    trainer = u.Trainer.FullName,
+                    // speciality = u.Trainer.Specialty // descomentar se estiver implementado
+                })
+                .ToList();
+
             return Json(new { data = trainingList });
         }
+
 
         [HttpGet]
         public IActionResult Get(int? id)
