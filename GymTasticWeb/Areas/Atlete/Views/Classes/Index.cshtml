@@ -2,6 +2,20 @@
 @if (User.IsInRole("Atlete"))
 {
     <div class="container">
+        @if (TempData["error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-4 shadow" role="alert" style="z-index: 1050;">
+                @TempData["error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+        }
+        @if (TempData["success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-4 shadow" role="alert" style="z-index: 1050;">
+                @TempData["success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+        }
         <div class="row pt-4 pb-3">
             <div class="col-md-6">
                 <h2 class="text-primary">Lista de Aulas</h2>

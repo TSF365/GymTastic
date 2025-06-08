@@ -51,8 +51,7 @@ namespace GymTasticWeb.Areas.Admin.Controllers
             {
                 _unitOfWork.Atlete.Add(atleteViewModel.Atlete);
                 _unitOfWork.Save();
-                
-                //save preferences
+
                 foreach (var prefId in atleteViewModel.SelectedPreferenceIds)
                 {
                     var atletePref = new AtletePreferences
@@ -62,12 +61,16 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                     };
                     _unitOfWork.AtletePreference.Add(atletePref);
                 }
-                _unitOfWork.Save();
 
+                _unitOfWork.Save();
+                TempData["success"] = "Atleta criado com sucesso.";
                 return RedirectToAction(nameof(Index));
             }
+
+            TempData["error"] = "Erro ao criar atleta.";
             return View(atleteViewModel);
         }
+
 
         public IActionResult Edit(int? id)
         {
@@ -120,25 +123,44 @@ namespace GymTasticWeb.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(AtleteViewModel atleteViewModel, IFormFile? file)
         {
-            //string oldFileNameWithPath = string.Empty;
             if (ModelState.IsValid)
             {
-                // Update main athlete data
-                _unitOfWork.Atlete.Update(atleteViewModel.Atlete);
+                var existingAtlete = _unitOfWork.Atlete.Get(a => a.Id == atleteViewModel.Atlete.Id);
+                if (existingAtlete == null)
+                {
+                    return NotFound();
+                }
+
+                existingAtlete.FirstName = atleteViewModel.Atlete.FirstName;
+                existingAtlete.LastName = atleteViewModel.Atlete.LastName;
+                existingAtlete.BirthDate = atleteViewModel.Atlete.BirthDate;
+                existingAtlete.GenderId = atleteViewModel.Atlete.GenderId;
+                existingAtlete.FIN = atleteViewModel.Atlete.FIN;
+                existingAtlete.CC = atleteViewModel.Atlete.CC;
+                existingAtlete.Email = atleteViewModel.Atlete.Email;
+                existingAtlete.PhoneNumber = atleteViewModel.Atlete.PhoneNumber;
+                existingAtlete.Address = atleteViewModel.Atlete.Address;
+                existingAtlete.ZipCode = atleteViewModel.Atlete.ZipCode;
+                existingAtlete.City = atleteViewModel.Atlete.City;
+                existingAtlete.EmergencyContact = atleteViewModel.Atlete.EmergencyContact;
+                existingAtlete.EmergencyPhone = atleteViewModel.Atlete.EmergencyPhone;
+                existingAtlete.EmergencyEmail = atleteViewModel.Atlete.EmergencyEmail;
+                existingAtlete.Height = atleteViewModel.Atlete.Height;
+                existingAtlete.Weight = atleteViewModel.Atlete.Weight;
+
                 _unitOfWork.Save();
 
-                // Remove existing preferences
-                var existing = _unitOfWork.AtletePreference
-                .GetAll()
-                .Where(p => p.Id_Atlete == atleteViewModel.Atlete.Id);
+                // Remover preferências antigas
+                var existingPrefs = _unitOfWork.AtletePreference
+                    .GetAll()
+                    .Where(p => p.Id_Atlete == atleteViewModel.Atlete.Id);
 
-                foreach (var item in existing)
+                foreach (var item in existingPrefs)
                 {
                     _unitOfWork.AtletePreference.Remove(item);
                 }
 
-
-                // Add updated preferences
+                // Adicionar novas preferências
                 foreach (var prefId in atleteViewModel.SelectedPreferenceIds)
                 {
                     var atletePref = new AtletePreferences
@@ -150,11 +172,11 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                 }
 
                 _unitOfWork.Save();
-
-
+                TempData["success"] = "Atleta atualizado com sucesso.";
                 return RedirectToAction("Index", "Atlete");
-
             }
+
+            // Recarregar listas para a view em caso de erro de validação
             atleteViewModel.GenderList = _unitOfWork.Gender.GetAll().Select(u => new SelectListItem
             {
                 Text = u.GenderDescription,
@@ -170,9 +192,17 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                 Text = u.Description,
                 Value = u.Id.ToString()
             });
-            return View(atleteViewModel);
 
+            atleteViewModel.PreferenceList = _unitOfWork.Preference.GetAll().Select(p => new SelectListItem
+            {
+                Text = p.Name,
+                Value = p.Id.ToString()
+            });
+
+            return View(atleteViewModel);
         }
+
+
 
         public IActionResult Delete(int? id)
         {
@@ -194,14 +224,16 @@ namespace GymTasticWeb.Areas.Admin.Controllers
             var atleteResult = _unitOfWork.Atlete.Get(u => u.Id == id);
             if (atleteResult == null)
             {
+                TempData["error"] = "Erro ao apagar atleta. Atleta não encontrado.";
                 return NotFound();
             }
+
             _unitOfWork.Atlete.Remove(atleteResult);
             _unitOfWork.Save();
             TempData["success"] = "Atleta apagado com sucesso.";
             return RedirectToAction("Index", "Atlete");
-
         }
+
 
         public IActionResult Preferences()
         {
@@ -224,17 +256,26 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                 TempData["success"] = "Preferência criada com sucesso.";
                 return RedirectToAction("Preferences");
             }
+
+            TempData["error"] = "Erro ao criar a preferência. Verifique os campos preenchidos.";
             return View(preferences);
         }
+
 
         public IActionResult EditPreference(int? id)
         {
             if (id == null || id == 0)
+            {
+                TempData["error"] = "Preferência inválida ou não encontrada.";
                 return NotFound();
+            }
 
             var preference = _unitOfWork.Preference.Get(u => u.Id == id);
             if (preference == null)
+            {
+                TempData["error"] = "Preferência não encontrada.";
                 return NotFound();
+            }
 
             return View(preference);
         }
@@ -250,17 +291,24 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                 return RedirectToAction("Preferences");
             }
 
+            TempData["error"] = "Erro ao atualizar a preferência. Verifique os dados inseridos.";
             return View(preferences);
         }
 
         public IActionResult DeletePreference(int? id)
         {
             if (id == null || id == 0)
+            {
+                TempData["error"] = "Preferência inválida ou não encontrada.";
                 return NotFound();
+            }
 
             var preference = _unitOfWork.Preference.Get(u => u.Id == id);
             if (preference == null)
+            {
+                TempData["error"] = "Preferência não encontrada.";
                 return NotFound();
+            }
 
             return View(preference);
         }
@@ -270,13 +318,17 @@ namespace GymTasticWeb.Areas.Admin.Controllers
         {
             var preference = _unitOfWork.Preference.Get(u => u.Id == id);
             if (preference == null)
+            {
+                TempData["error"] = "Erro ao eliminar a preferência. Preferência não encontrada.";
                 return NotFound();
+            }
 
             _unitOfWork.Preference.Remove(preference);
             _unitOfWork.Save();
             TempData["success"] = "Preferência eliminada com sucesso.";
             return RedirectToAction("Preferences");
         }
+
 
 
         #region AJAX API CALLS

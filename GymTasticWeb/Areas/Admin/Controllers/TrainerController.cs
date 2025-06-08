@@ -76,10 +76,26 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                 return View(viewModel);
             }
 
-            // Update trainer
-            _unitOfWork.Trainer.Update(viewModel.Trainer);
+            // Buscar o treinador original (já rastreado pelo DbContext)
+            var existingTrainer = _unitOfWork.Trainer.Get(t => t.Id == viewModel.Trainer.Id);
+            if (existingTrainer == null)
+            {
+                return NotFound();
+            }
 
-            // Remove existing specialities
+            // Atualizar propriedades manualmente (preservando o UserId)
+            existingTrainer.FullName = viewModel.Trainer.FullName;
+            existingTrainer.TPTD = viewModel.Trainer.TPTD;
+            existingTrainer.TptdDate = viewModel.Trainer.TptdDate;
+            existingTrainer.Email = viewModel.Trainer.Email;
+            existingTrainer.PhoneNumber = viewModel.Trainer.PhoneNumber;
+
+            // Salvar alterações
+            _unitOfWork.Save();
+
+            // Atualizar especialidades
+
+            // Remover as existentes
             var existingSpecialities = _unitOfWork.TrainerSpeciality
                 .GetAll().Where(ts => ts.Id_Trainer == viewModel.Trainer.Id).ToList();
 
@@ -88,7 +104,7 @@ namespace GymTasticWeb.Areas.Admin.Controllers
                 _unitOfWork.TrainerSpeciality.Remove(item);
             }
 
-            // Add new ones
+            // Adicionar as selecionadas
             if (viewModel.SelectedSpecialityIds != null)
             {
                 foreach (var specialityId in viewModel.SelectedSpecialityIds)
@@ -105,6 +121,7 @@ namespace GymTasticWeb.Areas.Admin.Controllers
             TempData["success"] = "Treinador atualizado com sucesso.";
             return RedirectToAction("Index");
         }
+
 
 
         public IActionResult Delete(int? id)

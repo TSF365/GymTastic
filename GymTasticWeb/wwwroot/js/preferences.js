@@ -9,10 +9,10 @@
                 render: function (data) {
                     return `
                         <div class="w-0 btn-group" role="group">
-                            <a href="/Atlete/EditPreference?id=${data}" class="btn btn-warning mx-1">
+                            <a href="/Admin/Atlete/EditPreference?id=${data}" class="btn btn-warning mx-1">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a href="/Atlete/DeletePreference?id=${data}" class="btn btn-danger mx-1">
+                            <a href="/Admin/Atlete/DeletePreference?id=${data}" class="btn btn-danger mx-1">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </div>`;
