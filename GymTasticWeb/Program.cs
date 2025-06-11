@@ -14,14 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 //LIGAR PARA TESTES NA REDE LOCAL
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(5000); // HTTP
-    options.ListenAnyIP(5001, listenOptions =>
-    {
-        listenOptions.UseHttps(); // HTTPS, se desejar
-    });
-});
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.ListenAnyIP(5000); // HTTP
+//    options.ListenAnyIP(5001, listenOptions =>
+//    {
+//        listenOptions.UseHttps(); // HTTPS, se desejar
+//    });
+//});
 
 builder.Services.AddControllersWithViews();
 

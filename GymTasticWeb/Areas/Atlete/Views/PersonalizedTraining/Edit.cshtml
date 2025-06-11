@@ -1,5 +1,5 @@
 ﻿@model PTrainingTrainerAtleteViewModel
-@if (User.IsInRole("Trainer"))
+@if (User.IsInRole("Atlete"))
 {
     <div class="border p-3 mt-4">
         <div class="row pb-2">
@@ -11,24 +11,38 @@
             <div class="mb-3 row p-1">
                 <div class="col-6">
                     <label asp-for="PersonalizedTraining.TrainingName" class="p-0"></label>
-                    <input asp-for="PersonalizedTraining.TrainingName" class="form-control" />
+                    <input asp-for="PersonalizedTraining.TrainingName" class="form-control" readonly/>
                     <span asp-validation-for="PersonalizedTraining.TrainingName" class="text-danger"></span>
                 </div>
                 <div class="col-6">
                     <label asp-for="PersonalizedTraining.TrainingObjective" class="p-0"></label>
-                    <input asp-for="PersonalizedTraining.TrainingObjective" class="form-control">
+                    <input asp-for="PersonalizedTraining.TrainingObjective" class="form-control" readonly>
                     <span asp-validation-for="PersonalizedTraining.TrainingObjective" class="text-danger"></span>
                 </div>
                 <div class="mb-3 row p-1">
                     <div class="col-6 mt-4">
-                        <select asp-for="PersonalizedTraining.TrainerId" asp-items="@Model.TrainerList" class="form-control">
-                            <option value="" disabled selected>-- Selecionar Opção --</option>
+                        <select class="form-control" disabled>
+                            <option value="" disabled>-- Selecionar Opção --</option>
+                            @foreach (var trainer in Model.TrainerList)
+                            {
+                                <option value="@trainer.Value" selected="@(trainer.Value == Model.PersonalizedTraining.TrainerId.ToString())">
+                                    @trainer.Text
+                                </option>
+                            }
                         </select>
+                        <input type="hidden" asp-for="PersonalizedTraining.TrainerId" />
                     </div>
                     <div class="col-6 mt-4">
-                        <select asp-for="PersonalizedTraining.AtleteId" asp-items="@Model.AtleteList" class="form-control">
-                            <option value="" disabled selected>-- Selecionar Opção --</option>
+                        <select class="form-control" disabled>
+                            <option value="" disabled>-- Selecionar Opção --</option>
+                            @foreach (var atlete in Model.AtleteList)
+                            {
+                                <option value="@atlete.Value" selected="@(atlete.Value == Model.PersonalizedTraining.AtleteId.ToString())">
+                                    @atlete.Text
+                                </option>
+                            }
                         </select>
+                        <input type="hidden" asp-for="PersonalizedTraining.AtleteId" />
                     </div>
                 </div>
             </div>
@@ -38,9 +52,6 @@
             @* ********************* Botões Save e Cancel **************************** *@
 
             <div class="row p-2">
-                <div class="col-6 col-md-3 p-1">
-                    <button type="submit" class="btn btn-primary form-control">Guardar</button>
-                </div>
                 <div class="col-6 col-md-3 p-1">
                     <a asp-controller="PersonalizedTraining" asp-action="Index" class="btn btn-outline-secondary form-control">
                         Voltar

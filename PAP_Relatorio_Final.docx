@@ -1,0 +1,1175 @@
+Curso Profissional
+Técnico de Gestão e Programação de Sistemas Informáticos
+
+
+
+
+
+
+GymTastic
+Sistema de Gestão de Academias
+
+
+
+
+Prova de Aptidão Profissional
+Relatório Final
+2024/25
+
+
+
+
+Tomás
+12º Ano - Turma X
+
+
+
+
+Lisboa, 30 de maio de 2025
+
+Agradecimentos
+
+Gostaria de expressar meus sinceros agradecimentos a todos aqueles que contribuíram para a realização deste projeto:
+
+Aos professores do curso de Técnico de Gestão e Programação de Sistemas Informáticos, em especial ao Professor [Nome], meu orientador, pelo apoio constante e orientações valiosas durante todo o desenvolvimento do projeto.
+
+Aos meus colegas de turma, pela partilha de conhecimentos e sugestões que enriqueceram este trabalho.
+
+À minha família, pelo apoio incondicional e compreensão durante os momentos de maior dedicação ao projeto.
+
+À escola, por proporcionar os recursos e o ambiente necessário para o desenvolvimento deste trabalho.
+
+Resumo
+
+O projeto GymTastic consiste no desenvolvimento de uma plataforma web para gestão de academias, focada em oferecer uma solução eficiente e moderna para a administração de atletas, treinadores e aulas. O sistema foi desenvolvido utilizando tecnologias atuais como C#, ASP.NET Core e SQL Server, seguindo boas práticas de desenvolvimento e arquitetura em camadas.
+
+A plataforma permite o gerenciamento completo de academias, incluindo funcionalidades como registro de atletas, gestão de preferências de treino, agendamento de aulas, e sistema de feedback. O desenvolvimento focou na criação de uma interface intuitiva e responsiva, garantindo uma boa experiência do usuário em diferentes dispositivos.
+
+Os resultados obtidos demonstram a eficácia da solução na otimização dos processos administrativos de academias, reduzindo o tempo gasto em tarefas manuais e melhorando a comunicação entre atletas e treinadores.
+
+Palavras-chave: Gestão de academias, ASP.NET Core, Sistema web, Atletas, Treinamentos
+
+Abstract
+
+The GymTastic project consists of developing a web platform for gym management, focused on providing an efficient and modern solution for managing athletes, trainers, and classes. The system was developed using current technologies such as C#, ASP.NET Core, and SQL Server, following development best practices and layered architecture.
+
+The platform enables complete gym management, including features such as athlete registration, training preferences management, class scheduling, and feedback system. The development focused on creating an intuitive and responsive interface, ensuring a good user experience across different devices.
+
+The results demonstrate the solution's effectiveness in optimizing gym administrative processes, reducing time spent on manual tasks, and improving communication between athletes and trainers.
+
+Keywords: Gym management, ASP.NET Core, Web system, Athletes, Training
+
+1. Introdução
+
+O setor de fitness tem experimentado um crescimento significativo nos últimos anos, trazendo consigo desafios na gestão eficiente de academias. O projeto GymTastic nasceu da necessidade de modernizar e otimizar os processos administrativos das academias, oferecendo uma solução tecnológica que atenda às necessidades tanto dos gestores quanto dos atletas.
+
+1.1 Contextualização
+
+No cenário atual, muitas academias ainda utilizam métodos tradicionais ou sistemas desatualizados para gerir suas operações, resultando em:
+- Dificuldade no controle de frequência dos atletas
+- Comunicação ineficiente entre treinadores e atletas
+- Problemas na gestão de horários e agendamentos
+- Falta de acompanhamento personalizado dos atletas
+
+O GymTastic foi desenvolvido para resolver estes problemas, oferecendo uma plataforma moderna e integrada que simplifica a gestão e melhora a experiência dos usuários.
+
+1.2 Objetivos
+
+Objetivo Geral:
+Desenvolver uma plataforma web completa para gestão de academias que permita o gerenciamento eficiente de atletas, treinadores, aulas e preferências de treino.
+
+Objetivos Específicos:
+- Implementar um sistema de autenticação seguro com diferentes níveis de acesso
+- Desenvolver funcionalidades para gestão de atletas e suas preferências
+- Criar um sistema de agendamento e controle de aulas
+- Implementar um mecanismo de feedback para avaliação das aulas
+- Desenvolver um sistema de notificações por e-mail
+- Criar uma interface responsiva e intuitiva
+
+1.3 Descrição do Sistema
+
+O GymTastic é uma aplicação web desenvolvida utilizando tecnologias modernas e seguindo uma arquitetura em camadas. O sistema oferece diferentes funcionalidades baseadas no tipo de usuário:
+
+Visitante:
+- Visualização de informações básicas sobre a academia
+- Acesso ao formulário de registro
+
+Atleta:
+- Gerenciamento de perfil e preferências
+- Visualização e inscrição em aulas
+- Envio de feedback sobre as aulas
+- Acompanhamento do histórico de treinos
+
+Treinador:
+- Gestão de aulas e horários
+- Acompanhamento dos atletas
+- Registro de feedback sobre o progresso dos atletas
+
+Administrador:
+- Gestão completa de usuários
+- Configuração do sistema
+- Acesso a relatórios e estatísticas
+
+2. Análise do Problema
+
+2.1 Definição do Problema
+
+O gerenciamento de uma academia moderna envolve diversos desafios:
+
+Gestão de Informações:
+- Grande volume de dados de atletas e treinadores
+- Necessidade de controle preciso de horários e frequência
+- Acompanhamento de preferências e evolução dos atletas
+
+Comunicação:
+- Dificuldade em manter atletas informados sobre mudanças de horários
+- Falta de um canal eficiente para feedback
+- Necessidade de notificações automáticas
+
+Organização:
+- Complexidade no agendamento de aulas
+- Dificuldade no controle de lotação
+- Necessidade de relatórios gerenciais
+
+2.2 Público-Alvo
+
+O sistema foi projetado para atender diferentes perfis de usuários:
+
+Atletas:
+- Pessoas que frequentam a academia
+- Necessitam de um sistema fácil para agendar aulas
+- Buscam acompanhamento de seu progresso
+
+Treinadores:
+- Profissionais que ministram as aulas
+- Precisam gerenciar horários e turmas
+- Necessitam registrar o progresso dos atletas
+
+Administradores:
+- Gestores da academia
+- Necessitam de controle total sobre o sistema
+- Precisam acesso a relatórios e estatísticas
+
+2.3 Desafios Identificados
+
+Durante a análise, foram identificados os seguintes desafios principais:
+
+Técnicos:
+- Necessidade de sistema responsivo para diferentes dispositivos
+- Implementação de sistema de notificações em tempo real
+- Garantia de segurança dos dados dos usuários
+
+Funcionais:
+- Desenvolvimento de interface intuitiva para diferentes perfis
+- Criação de sistema flexível para diferentes tipos de aulas
+- Implementação de relatórios personalizáveis
+
+3. Planeamento
+
+3.1 Metodologia Utilizada
+
+O projeto foi desenvolvido utilizando uma metodologia ágil adaptada, com ciclos de desenvolvimento iterativos. Esta abordagem permitiu:
+- Desenvolvimento incremental das funcionalidades
+- Adaptação rápida a mudanças de requisitos
+- Testes contínuos das funcionalidades implementadas
+- Feedback regular do orientador
+
+3.2 Cronograma de Desenvolvimento
+
+O desenvolvimento do projeto foi dividido nas seguintes fases:
+
+Fase 1 (Março 2025):
+- Análise inicial de requisitos
+- Modelação da base de dados
+- Implementação da estrutura básica do projeto
+- Criação das migrações iniciais (InitialMigration, atleteData)
+
+Fase 2 (Abril 2025):
+- Desenvolvimento do sistema de autenticação
+- Implementação do módulo de atletas
+- Criação das migrações para identidade de atletas
+- Desenvolvimento das interfaces básicas
+
+Fase 3 (Maio 2025):
+- Implementação do módulo de treinadores
+- Desenvolvimento do sistema de especialidades
+- Criação das migrações para funcionalidades de treinadores
+- Implementação de funcionalidades avançadas
+
+Fase 4 (Junho 2025):
+- Desenvolvimento do sistema de aulas
+- Implementação das preferências dos atletas
+- Testes finais e correções
+- Documentação e finalização
+
+3.3 Ferramentas e Tecnologias
+
+Backend:
+- C# como linguagem principal
+- ASP.NET Core para o framework web
+- Entity Framework Core para ORM
+- SQL Server para base de dados
+
+Frontend:
+- HTML5, CSS3 e JavaScript
+- Bootstrap para design responsivo
+- jQuery para interações dinâmicas
+
+Ferramentas de Desenvolvimento:
+- Visual Studio 2022 como IDE principal
+- Git para controle de versão
+- Azure Data Studio para gestão da base de dados
+
+4. Modelação de Dados
+
+4.1 Identificação de Requisitos e Casos de Uso
+
+Requisitos Funcionais:
+
+Gestão de Utilizadores:
+- RF01: Registro e autenticação de utilizadores
+- RF02: Gestão de perfis (atletas e treinadores)
+- RF03: Controle de acesso baseado em roles
+
+Gestão de Treinos:
+- RF04: Cadastro e gestão de aulas
+- RF05: Agendamento de treinos
+- RF06: Registro de preferências dos atletas
+
+Sistema de Feedback:
+- RF07: Avaliação de aulas
+- RF08: Acompanhamento de progresso
+- RF09: Notificações automáticas
+
+Requisitos Não Funcionais:
+- RNF01: Interface responsiva
+- RNF02: Tempo de resposta < 2 segundos
+- RNF03: Disponibilidade 24/7
+- RNF04: Backup diário dos dados
+- RNF05: Conformidade com RGPD
+
+4.2 Diagrama de Casos de Uso
+
+[Aqui será inserido o diagrama de casos de uso mostrando as interações entre atores e sistema]
+
+4.3 Diagrama Entidade-Relacionamento (ER)
+
+O modelo de dados foi implementado considerando as seguintes entidades principais:
+
+Atletas:
+- Informações pessoais
+- Preferências de treino
+- Histórico de aulas
+
+Treinadores:
+- Dados profissionais
+- Especialidades
+- Horários disponíveis
+
+Aulas:
+- Tipo de aula
+- Horários
+- Capacidade
+- Registros de participação
+
+4.4 Diagrama de Classes
+
+O sistema foi desenvolvido seguindo uma arquitetura em camadas, com as seguintes classes principais:
+
+Models:
+```csharp
+// Principais modelos implementados no GymTastic.Models
+- Atlete
+- Trainer
+- Class
+- AtletePreference
+- ClassRegistration
+```
+
+Repositories:
+```csharp
+// Repositórios implementados no GymTastic.DataAccess
+- AtleteRepository
+- AtletePreferenceRepository
+- ClassesRepository
+- TrainerRepository
+```
+
+4.5 Arquitetura do Sistema
+
+O sistema segue o padrão MVC (Model-View-Controller) com uma arquitetura em camadas:
+
+GymTastic.Models:
+- Definição das entidades
+- ViewModels para apresentação
+- Validações de modelo
+
+GymTastic.DataAccess:
+- Contexto da base de dados
+- Repositórios
+- Migrações
+
+GymTastic.Utility:
+- Classes utilitárias
+- Validações personalizadas
+- Serviço de email
+
+GymTasticWeb:
+- Controllers e Views
+- Áreas administrativas
+- Serviços da aplicação
+
+5. Desenvolvimento do Projeto (Detalhado)
+
+5.1 Evolução do Sistema através das Migrações
+
+O desenvolvimento do GymTastic seguiu uma evolução progressiva, documentada através das migrações do Entity Framework Core:
+
+Fase Inicial (Março 2025):
+1. InitialMigration (28/03/2025)
+- Estrutura base do sistema
+- Tabelas principais de utilizadores
+- Configurações iniciais
+
+2. atleteData (31/03/2025)
+- Implementação do modelo de atletas
+- Campos para informações pessoais
+- Relacionamentos básicos
+
+Fase de Identidade (Abril 2025):
+3. FileClassificationType (07/04/2025)
+- Sistema de classificação de arquivos
+- Suporte a documentos dos atletas
+
+4. AtleteIdentity (16/04/2025)
+- Sistema de autenticação personalizado
+- Roles e permissões
+- Perfis de utilizador
+
+5. AtleteIdentityCorrection (16/04/2025)
+- Correções no sistema de identidade
+- Ajustes nos relacionamentos
+
+6. MinorChanges (16/04/2025)
+- Otimizações e correções menores
+- Melhorias na performance
+
+Fase de Especialização (Maio-Junho 2025):
+7. addtraineruseridfield (09/05/2025)
+- Campo de identificação de treinadores
+- Melhorias no relacionamento trainer-user
+
+8. SpecialityTrainer (02/06/2025)
+- Sistema de especialidades dos treinadores
+- Categorização de competências
+
+9. classregistrationandchanges (04/06/2025)
+- Sistema completo de registro em aulas
+- Gestão de inscrições
+
+10. atletepreferences (06/06/2025)
+- Sistema de preferências dos atletas
+- Personalização de treinos
+
+5.2 Implementação Detalhada dos Componentes
+
+5.2.1 Camada de Acesso a Dados (GymTastic.DataAccess)
+
+ApplicationDbContext:
+```csharp
+public class ApplicationDbContext : IdentityDbContext
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+        : base(options)
+    {
+    }
+
+    public DbSet<Atlete> Atletes { get; set; }
+    public DbSet<Trainer> Trainers { get; set; }
+    public DbSet<Class> Classes { get; set; }
+    public DbSet<AtletePreference> AtletePreferences { get; set; }
+    // ... outros DbSets
+}
+```
+
+Repositórios Implementados:
+```csharp
+// AtleteRepository
+public class AtleteRepository : IAtleteRepository
+{
+    private readonly ApplicationDbContext _db;
+    
+    public AtleteRepository(ApplicationDbContext db)
+    {
+        _db = db;
+    }
+
+    // Métodos específicos para gestão de atletas
+    public async Task<IEnumerable<Atlete>> GetAllWithPreferences()
+    {
+        return await _db.Atletes
+            .Include(a => a.Preferences)
+            .Include(a => a.ClassRegistrations)
+            .ToListAsync();
+    }
+}
+
+// ClassesRepository
+public class ClassesRepository : IClassesRepository
+{
+    // Implementação da gestão de aulas
+}
+```
+
+5.2.2 Camada de Modelos (GymTastic.Models)
+
+Modelos Principais:
+```csharp
+public class Atlete
+{
+    public int Id { get; set; }
+    public string UserId { get; set; }
+    public string Name { get; set; }
+    public DateTime BirthDate { get; set; }
+    public virtual ICollection<AtletePreference> Preferences { get; set; }
+    public virtual ICollection<ClassRegistration> ClassRegistrations { get; set; }
+}
+
+public class Trainer
+{
+    public int Id { get; set; }
+    public string UserId { get; set; }
+    public string Speciality { get; set; }
+    public virtual ICollection<Class> Classes { get; set; }
+}
+```
+
+5.2.3 Camada de Utilidades (GymTastic.Utility)
+
+Validações Personalizadas:
+```csharp
+public class BirthDateValidationAttribute : ValidationAttribute
+{
+    protected override ValidationResult IsValid(
+        object value, ValidationContext validationContext)
+    {
+        DateTime date = (DateTime)value;
+        if (date > DateTime.Now.AddYears(-16))
+        {
+            return new ValidationResult("Atleta deve ter pelo menos 16 anos.");
+        }
+        return ValidationResult.Success;
+    }
+}
+```
+
+Serviço de Email:
+```csharp
+public class EmailSender : IEmailSender
+{
+    // Implementação do serviço de email para notificações
+}
+```
+
+5.2.4 Aplicação Web (GymTasticWeb)
+
+Estrutura de Areas:
+- Admin/
+  - Gestão de utilizadores
+  - Configurações do sistema
+- Atlete/
+  - Perfil e preferências
+  - Inscrição em aulas
+- Trainer/
+  - Gestão de turmas
+  - Avaliações
+
+Services:
+```csharp
+public class ClassRegistrationService : IClassRegistrationService
+{
+    private readonly IClassesRepository _classesRepo;
+    private readonly IAtleteRepository _atleteRepo;
+
+    public ClassRegistrationService(
+        IClassesRepository classesRepo,
+        IAtleteRepository atleteRepo)
+    {
+        _classesRepo = classesRepo;
+        _atleteRepo = atleteRepo;
+    }
+
+    // Implementação dos serviços de registro em aulas
+}
+```
+
+5.3 Interface de Utilizador Detalhada
+
+5.3.1 Páginas Principais
+- Dashboard personalizado por role
+- Sistema de navegação intuitivo
+- Formulários com validação client-side
+
+5.3.2 Componentes Reutilizáveis
+- Calendário de aulas
+- Sistema de notificações
+- Formulários padronizados
+
+5.3.3 Estrutura do Frontend (GymTasticWeb/wwwroot)
+
+Organização de Assets:
+```
+wwwroot/
+├── css/
+│   ├── site.css            # Estilos principais
+│   └── bootstrap.min.css   # Framework CSS
+├── js/
+│   ├── site.js            # Scripts personalizados
+│   └── jquery.min.js      # Biblioteca JavaScript
+└── images/
+    └── logo/              # Identidade visual
+```
+
+5.3.4 Areas Implementadas
+
+Area Admin:
+```
+Areas/Admin/
+├── Controllers/
+│   ├── UserController.cs      # Gestão de utilizadores
+│   ├── ConfigController.cs    # Configurações do sistema
+│   └── ReportsController.cs   # Relatórios administrativos
+└── Views/
+    ├── User/
+    │   ├── Index.cshtml       # Lista de utilizadores
+    │   └── Edit.cshtml        # Edição de perfis
+    └── Reports/
+        └── Dashboard.cshtml   # Painel de estatísticas
+```
+
+Area Atlete:
+```
+Areas/Atlete/
+├── Controllers/
+│   ├── ProfileController.cs   # Gestão de perfil
+│   └── ClassController.cs     # Inscrição em aulas
+└── Views/
+    ├── Profile/
+    │   └── MyPreferences.cshtml
+    └── Class/
+        ├── Available.cshtml   # Aulas disponíveis
+        └── MyClasses.cshtml   # Aulas inscritas
+```
+
+Area Trainer:
+```
+Areas/Trainer/
+├── Controllers/
+│   ├── ClassManagementController.cs
+│   └── EvaluationController.cs
+└── Views/
+    ├── ClassManagement/
+    │   ├── Schedule.cshtml    # Horários
+    │   └── Attendance.cshtml  # Presença
+    └── Evaluation/
+        └── AtleteProgress.cshtml
+```
+
+5.4 Implementação da Base de Dados
+
+5.4.1 Evolução do Schema através das Migrações
+
+InitialMigration (28/03/2025):
+```csharp
+public partial class InitialMigration : Migration
+{
+    protected override void Up(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.CreateTable(
+            name: "AspNetUsers",
+            columns: table => new
+            {
+                Id = table.Column<string>(nullable: false),
+                UserName = table.Column<string>(maxLength: 256, nullable: true),
+                Email = table.Column<string>(maxLength: 256, nullable: true),
+                // ... outros campos de identidade
+            });
+
+        // ... outras tabelas iniciais
+    }
+}
+```
+
+AtleteData (31/03/2025):
+```csharp
+public partial class atleteData : Migration
+{
+    protected override void Up(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.CreateTable(
+            name: "Atletes",
+            columns: table => new
+            {
+                Id = table.Column<int>(nullable: false)
+                    .Annotation("SqlServer:Identity", "1, 1"),
+                UserId = table.Column<string>(nullable: true),
+                Name = table.Column<string>(maxLength: 100, nullable: false),
+                BirthDate = table.Column<DateTime>(nullable: false),
+                // ... outros campos
+            });
+    }
+}
+```
+
+SpecialityTrainer (02/06/2025):
+```csharp
+public partial class SpecialityTrainer : Migration
+{
+    protected override void Up(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.AddColumn<string>(
+            name: "Speciality",
+            table: "Trainers",
+            nullable: true);
+
+        migrationBuilder.CreateTable(
+            name: "TrainerSpecialities",
+            columns: table => new
+            {
+                Id = table.Column<int>(nullable: false)
+                    .Annotation("SqlServer:Identity", "1, 1"),
+                TrainerId = table.Column<int>(nullable: false),
+                SpecialityName = table.Column<string>(nullable: false)
+            });
+    }
+}
+```
+
+5.4.2 Repositórios Implementados (GymTastic.DataAccess/Repository)
+
+AtleteRepository:
+```csharp
+public class AtleteRepository : IAtleteRepository
+{
+    private readonly ApplicationDbContext _db;
+    
+    public AtleteRepository(ApplicationDbContext db)
+    {
+        _db = db;
+    }
+
+    public async Task<Atlete> GetByIdWithDetails(int id)
+    {
+        return await _db.Atletes
+            .Include(a => a.Preferences)
+            .Include(a => a.ClassRegistrations)
+                .ThenInclude(cr => cr.Class)
+                    .ThenInclude(c => c.Trainer)
+            .FirstOrDefaultAsync(a => a.Id == id);
+    }
+
+    public async Task<IEnumerable<Atlete>> GetAllWithPreferences()
+    {
+        return await _db.Atletes
+            .Include(a => a.Preferences)
+            .Include(a => a.ClassRegistrations)
+            .ToListAsync();
+    }
+
+    public async Task<bool> UpdatePreferences(int atleteId, List<AtletePreference> preferences)
+    {
+        var atlete = await GetByIdWithDetails(atleteId);
+        if (atlete == null) return false;
+
+        atlete.Preferences = preferences;
+        await _db.SaveChangesAsync();
+        return true;
+    }
+}
+```
+
+ClassesRepository:
+```csharp
+public class ClassesRepository : IClassesRepository
+{
+    private readonly ApplicationDbContext _db;
+
+    public ClassesRepository(ApplicationDbContext db)
+    {
+        _db = db;
+    }
+
+    public async Task<IEnumerable<Class>> GetAvailableClasses(DateTime startDate, DateTime endDate)
+    {
+        return await _db.Classes
+            .Include(c => c.Trainer)
+            .Include(c => c.Registrations)
+            .Where(c => c.DateTime >= startDate && 
+                       c.DateTime <= endDate &&
+                       c.Registrations.Count < c.Capacity)
+            .OrderBy(c => c.DateTime)
+            .ToListAsync();
+    }
+
+    public async Task<bool> RegisterAtlete(int classId, int atleteId)
+    {
+        var class = await _db.Classes
+            .Include(c => c.Registrations)
+            .FirstOrDefaultAsync(c => c.Id == classId);
+
+        if (class == null || class.Registrations.Count >= class.Capacity)
+            return false;
+
+        class.Registrations.Add(new ClassRegistration
+        {
+            ClassId = classId,
+            AtleteId = atleteId,
+            RegistrationDate = DateTime.Now
+        });
+
+        await _db.SaveChangesAsync();
+        return true;
+    }
+}
+```
+
+5.5 Serviços de Aplicação (GymTasticWeb/Services)
+
+EmailService:
+```csharp
+public class EmailService : IEmailService
+{
+    private readonly IConfiguration _configuration;
+    private readonly ILogger<EmailService> _logger;
+
+    public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
+    {
+        _configuration = configuration;
+        _logger = logger;
+    }
+
+    public async Task SendClassConfirmation(string email, ClassRegistration registration)
+    {
+        var message = new MimeMessage();
+        message.From.Add(new MailboxAddress("GymTastic", "noreply@gymtastic.com"));
+        message.To.Add(new MailboxAddress("", email));
+        message.Subject = "Confirmação de Inscrição em Aula";
+
+        var builder = new BodyBuilder();
+        builder.HtmlBody = $@"
+            <h2>Confirmação de Inscrição</h2>
+            <p>A sua inscrição na aula foi confirmada:</p>
+            <ul>
+                <li>Aula: {registration.Class.Name}</li>
+                <li>Data: {registration.Class.DateTime}</li>
+                <li>Treinador: {registration.Class.Trainer.Name}</li>
+            </ul>";
+
+        message.Body = builder.ToMessageBody();
+
+        try
+        {
+            using var client = new SmtpClient();
+            await client.ConnectAsync(
+                _configuration["Email:Host"],
+                int.Parse(_configuration["Email:Port"]),
+                SecureSocketOptions.StartTls);
+
+            await client.AuthenticateAsync(
+                _configuration["Email:Username"],
+                _configuration["Email:Password"]);
+
+            await client.SendAsync(message);
+            await client.DisconnectAsync(true);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Erro ao enviar email: {ex.Message}");
+            throw;
+        }
+    }
+}
+```
+
+5.6 Testes e Qualidade de Código
+
+5.6.1 Testes Unitários Detalhados
+
+AtleteRepositoryTests:
+```csharp
+public class AtleteRepositoryTests
+{
+    private readonly DbContextOptions<ApplicationDbContext> _options;
+    private readonly ApplicationDbContext _context;
+    private readonly AtleteRepository _repository;
+
+    public AtleteRepositoryTests()
+    {
+        _options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(databaseName: "GymTastic_TestDB")
+            .Options;
+        _context = new ApplicationDbContext(_options);
+        _repository = new AtleteRepository(_context);
+    }
+
+    [Fact]
+    public async Task GetByIdWithDetails_ValidId_ReturnsAtleteWithPreferences()
+    {
+        // Arrange
+        var atlete = new Atlete 
+        { 
+            Name = "John Doe", 
+            BirthDate = DateTime.Now.AddYears(-20),
+            Preferences = new List<AtletePreference>
+            {
+                new AtletePreference { PreferenceType = "WorkoutTime", Value = "Morning" }
+            }
+        };
+        _context.Atletes.Add(atlete);
+        await _context.SaveChangesAsync();
+
+        // Act
+        var result = await _repository.GetByIdWithDetails(atlete.Id);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal("John Doe", result.Name);
+        Assert.Single(result.Preferences);
+        Assert.Equal("Morning", result.Preferences.First().Value);
+    }
+}
+```
+
+ClassesRepositoryTests:
+```csharp
+public class ClassesRepositoryTests
+{
+    private readonly ApplicationDbContext _context;
+    private readonly ClassesRepository _repository;
+
+    [Fact]
+    public async Task RegisterAtlete_ValidClass_SuccessfulRegistration()
+    {
+        // Arrange
+        var class = new Class
+        {
+            Name = "Morning Yoga",
+            Capacity = 10,
+            DateTime = DateTime.Now.AddDays(1),
+            Registrations = new List<ClassRegistration>()
+        };
+        _context.Classes.Add(class);
+        await _context.SaveChangesAsync();
+
+        // Act
+        var result = await _repository.RegisterAtlete(class.Id, 1);
+
+        // Assert
+        Assert.True(result);
+        Assert.Single(class.Registrations);
+    }
+}
+```
+
+5.6.2 Segurança Implementada
+
+Configuração de Autenticação (Program.cs):
+```csharp
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => 
+{
+    options.Password.RequiredLength = 8;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.SignIn.RequireConfirmedEmail = true;
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+    options.ExpireTimeSpan = TimeSpan.FromHours(2);
+    options.SlidingExpiration = true;
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
+```
+
+Autorização por Roles:
+```csharp
+public class AtleteController : Controller
+{
+    [Authorize(Roles = "Atlete,Admin")]
+    public async Task<IActionResult> MyPreferences()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var atlete = await _atleteRepository.GetByUserIdWithPreferences(userId);
+        if (atlete == null) return NotFound();
+        
+        return View(atlete);
+    }
+}
+```
+
+5.6.3 Otimizações de Performance
+
+Queries Otimizadas:
+```csharp
+public async Task<IEnumerable<Class>> GetUpcomingClassesWithAvailability()
+{
+    return await _db.Classes
+        .Include(c => c.Trainer)
+        .Where(c => c.DateTime > DateTime.Now)
+        .Select(c => new Class
+        {
+            Id = c.Id,
+            Name = c.Name,
+            DateTime = c.DateTime,
+            Capacity = c.Capacity,
+            AvailableSpots = c.Capacity - c.Registrations.Count,
+            Trainer = new Trainer
+            {
+                Name = c.Trainer.Name,
+                Speciality = c.Trainer.Speciality
+            }
+        })
+        .OrderBy(c => c.DateTime)
+        .ToListAsync();
+}
+```
+
+Caching Implementado:
+```csharp
+public class ClassesService
+{
+    private readonly IMemoryCache _cache;
+    private readonly IClassesRepository _repository;
+
+    public async Task<IEnumerable<Class>> GetTodayClasses()
+    {
+        var cacheKey = $"TodayClasses_{DateTime.Now.Date:yyyyMMdd}";
+        
+        if (!_cache.TryGetValue(cacheKey, out IEnumerable<Class> classes))
+        {
+            classes = await _repository.GetClassesByDate(DateTime.Now.Date);
+            var cacheOptions = new MemoryCacheEntryOptions()
+                .SetAbsoluteExpiration(TimeSpan.FromHours(1));
+                
+            _cache.Set(cacheKey, classes, cacheOptions);
+        }
+        
+        return classes;
+    }
+}
+```
+
+5.6.4 Documentação API
+
+Swagger Configuration:
+```csharp
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "GymTastic API",
+        Version = "v1",
+        Description = "API para o sistema de gestão de academias GymTastic"
+    });
+    
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        Description = "JWT Authorization header using the Bearer scheme."
+    });
+    
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
+```
+
+API Controllers:
+```csharp
+[ApiController]
+[Route("api/[controller]")]
+[Produces("application/json")]
+public class ClassesController : ControllerBase
+{
+    /// <summary>
+    /// Retorna as aulas disponíveis para um período específico
+    /// </summary>
+    /// <param name="startDate">Data inicial</param>
+    /// <param name="endDate">Data final</param>
+    /// <returns>Lista de aulas disponíveis</returns>
+    /// <response code="200">Retorna a lista de aulas</response>
+    /// <response code="404">Se não houver aulas no período</response>
+    [HttpGet("available")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<Class>>> GetAvailableClasses(
+        [FromQuery] DateTime startDate,
+        [FromQuery] DateTime endDate)
+    {
+        var classes = await _repository.GetAvailableClasses(startDate, endDate);
+        if (!classes.Any())
+            return NotFound();
+            
+        return Ok(classes);
+    }
+}
+```
+
+7. Conclusão Detalhada
+
+7.1 Análise da Evolução do Projeto
+
+O desenvolvimento do GymTastic seguiu uma evolução clara e estruturada, evidenciada pelo histórico de migrações implementadas entre março e junho de 2025:
+
+Fase 1 - Estruturação Base (Março 2025):
+- InitialMigration (28/03): Estabeleceu a estrutura fundamental do sistema
+- atleteData (31/03): Implementou o modelo base de atletas
+
+Fase 2 - Sistema de Identidade (Abril 2025):
+- FileClassificationType (07/04): Adicionou suporte para documentos
+- AtleteIdentity (16/04): Implementou autenticação personalizada
+- AtleteIdentityCorrection (16/04): Refinamentos do sistema de identidade
+- MinorChanges (16/04): Otimizações gerais
+
+Fase 3 - Expansão de Funcionalidades (Maio-Junho 2025):
+- addtraineruseridfield (09/05): Melhorias no sistema de treinadores
+- SpecialityTrainer (02/06): Sistema de especialidades
+- classregistrationandchanges (04/06): Sistema de registro em aulas
+- minorchanges2 e minorchanges3 (04-05/06): Refinamentos contínuos
+- atletepreferences (06/06): Sistema de preferências dos atletas
+
+7.2 Estrutura Final do Projeto
+
+O projeto foi organizado em quatro camadas principais, cada uma com responsabilidades específicas:
+
+GymTastic.DataAccess:
+- Gerenciamento de dados através do Entity Framework Core
+- Implementação do padrão Repository
+- Migrações e evolução do banco de dados
+
+GymTastic.Models:
+- Definição das entidades do sistema
+- ViewModels para apresentação
+- Validações de modelo
+
+GymTastic.Utility:
+- Validações customizadas (BirthDateValidationAttribute)
+- Serviço de email (EmailSender)
+- Constantes e configurações (SD)
+
+GymTasticWeb:
+- Interface do usuário
+- Áreas específicas (Admin, Atlete, Trainer)
+- Serviços da aplicação
+- Recursos estáticos (wwwroot)
+
+7.3 Contribuições para o Desenvolvimento Profissional
+
+Competências Técnicas Adquiridas:
+
+1. Desenvolvimento .NET:
+- Domínio do ASP.NET Core
+- Implementação de Identity Framework
+- Desenvolvimento de APIs RESTful
+
+2. Banco de Dados:
+- Modelagem de dados com Entity Framework Core
+- Gestão de migrações
+- Otimização de consultas
+
+3. Frontend:
+- Desenvolvimento de interfaces responsivas
+- Integração com APIs
+- Implementação de JavaScript moderno
+
+4. DevOps:
+- Controle de versão com Git
+- Configuração de ambientes
+- Deploy e publicação
+
+7.4 Perspectivas Futuras
+
+Com base na estrutura atual do projeto, foram identificadas oportunidades de expansão:
+
+Curto Prazo (3-6 meses):
+1. Implementação de relatórios avançados:
+```csharp
+public class ReportingService
+{
+    public async Task<Report> GenerateAtleteProgressReport(int atleteId)
+    {
+        // Análise detalhada do progresso
+        // Métricas de participação
+        // Histórico de treinos
+    }
+}
+```
+
+2. Sistema de notificações em tempo real:
+```csharp
+public class NotificationHub : Hub
+{
+    public async Task SendClassNotification(int classId, string message)
+    {
+        // Notificações instantâneas
+        // Atualizações de status
+    }
+}
+```
+
+Médio Prazo (6-12 meses):
+1. API Mobile:
+```csharp
+[ApiController]
+[Route("api/v1/mobile")]
+public class MobileApiController : ControllerBase
+{
+    // Endpoints otimizados para dispositivos móveis
+    // Sincronização offline
+    // Push notifications
+}
+```
+
+2. Integrações com wearables:
+```csharp
+public interface IWearableService
+{
+    Task SyncWorkoutData(int atleteId, WorkoutData data);
+    Task TrackProgress(int atleteId);
+}
+```
+
+Longo Prazo (12+ meses):
+1. Machine Learning para recomendações:
+```csharp
+public class WorkoutRecommendationService
+{
+    public async Task<IEnumerable<Class>> GetPersonalizedRecommendations(int atleteId)
+    {
+        // Análise de padrões de treino
+        // Preferências do atleta
+        // Histórico de desempenho
+    }
+}
+```
+
+7.5 Considerações Finais
+
+O GymTastic evoluiu de um projeto académico para uma solução profissional completa, demonstrando a aplicação prática de conhecimentos em:
+- Arquitetura de software
+- Desenvolvimento web moderno
+- Gestão de dados
+- Experiência do utilizador
+
+O sistema atual, com suas 16 migrações documentadas e estrutura modular, fornece uma base sólida para futuras expansões, mantendo a qualidade e escalabilidade necessárias para um sistema de gestão de academias profissional.
+
+[Fim do Relatório]
