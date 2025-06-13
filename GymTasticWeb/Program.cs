@@ -44,7 +44,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<IdentityOptions>(options =>
